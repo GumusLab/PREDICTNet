@@ -1,9 +1,9 @@
 ﻿.fstdiv {
     position: absolute;
-    left: 4px;   /* position inside relatively positioned parent */
-    top: 300px;
+    left: 29px;   /* position inside relatively positioned parent */
+    top: 290px;
     z-index: 10; 
-    width: 268px;
+    width: 270px;
 }
 .fstdiv.open {
     z-index: 2147483647

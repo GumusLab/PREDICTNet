@@ -8,10 +8,13 @@
   <script src="libraries/d3.v3.min.js" charset="utf-8"></script>
   <script src="libraries/rainbowvis.js"></script>
   <script src="https://github.com/mrdoob/three.js/blob/dev/examples/jsm/deprecated/Geometry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
   <script src="js/fstdropdown.js"></script>
   <script src="js/networks.js"></script>
   <link rel="stylesheet" href="css/fstdropdown.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.4.6/tailwind.min.css'><link rel="stylesheet" href="./style.css">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style type="text/css">
@@ -46,15 +49,17 @@
   transition-duration: 0.4s;
   cursor: pointer;
   position: absolute;
-  left: 2px;   /* position inside relatively positioned parent */
+  left: 27px;   /* position inside relatively positioned parent */
   top: 340px;
   z-index: 10; 
 }
 
 .button1 {
-  background-color: rgb(47,49,55); 
-  color: rgb(167, 167, 167); 
+  background-color: #eef2f7; 
+  color: rgb(0, 0, 0); 
   border: 0px solid #000000;
+  border-radius: 8px;
+  font-weight: lighter;
 }
 
 .button2 {
@@ -68,27 +73,33 @@
   transition-duration: 0.4s;
   cursor: pointer;
   position: absolute;
-  left: 140px;   /* position inside relatively positioned parent */
+  left: 165px;   /* position inside relatively positioned parent */
   top: 340px;
   z-index: 10; 
 }
 
-
-
 .button1:hover {
-  background-color: #000000;
-  color: white;
+  background-color: #b1b1b1;
+  color: rgb(0, 0, 0);
 }
 
 .p1 {
   font-family: Helvetica, sans-serif;
   position: absolute;
   font-size: 14px;
-  left: 8px;   /* position inside relatively positioned parent */
+  left: 30px;   /* position inside relatively positioned parent */
   top: 267px;
   z-index: 10; 
 }
 
+
+button.link { background:none; border:none; 
+  font-family: Helvetica, sans-serif;
+  position: absolute;
+  font-size: 10px;
+  left: 10px;   /* position inside relatively positioned parent */
+  top: 140px;
+  z-index: 10; }
 
 #guiplace{
   font-size: 55px;
@@ -103,7 +114,19 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
+#filter2 {
+    position: absolute;
+    left: 5px;   /* position inside relatively positioned parent */
+    top: 150px;
+    z-index: 15;   /* adjust as needed */
+    }
 
+  #filter3 {
+  position: absolute;
+  left: 25px;   /* position inside relatively positioned parent */
+  top: 200px;
+  z-index: 15;   /* adjust as needed */
+  }
   </style>
 </head>
 
@@ -113,22 +136,97 @@ body {
     <text id="PREDICTNet" transform="translate(113 37)" fill="#fff" font-size="30" font-family="Helvetica-Bold, Helvetica" font-weight="700" letter-spacing="0.1em"><tspan x="-96.586" y="0">PREDICTNet</tspan></text>
   </svg>
 
-  <p class="p1">Node Query</p>
-  <p>
+  <p class="p1" id= "nqText" >Node Query</p>
+
+  <button class="link" id="hideShow" value=0 onclick="hideShow(this.value)"><u>hide controls</u></button>
+  
+<p id="nodequeryMain">
     <select class='fstdropdown-select' id="nodequery" onchange="updateSearch()">
         <option value="">--</option>
     </select>
 </p>
-  <button class="button button1" onclick="screenshot()">SnapShot</button>
+  <button class="button button1" id="screenshotButton" onclick="screenshot()">SnapShot</button>
 
-  <button class="button2 button1" onclick="queryReset()">Reset</button>
+  <button class="button2 button1" id="resetButton"  onclick="queryReset()">Reset</button>
+  
+<div id="radioButtons">
+  <ul id="filter2" class="filter-switch inline-flex items-center relative h-10 p-1 space-x-1 bg-gray-200 rounded-md font-medium text-black-600 my-4 border border-gray-400">
+    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+      <input type="radio" name="filter2" id="filter2-0" class="sr-only" onclick="changeState()" value = "HC" checked>
+      <label for="filter2-0" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
+        Healthy Control
+      </label>
+      <div aria-hidden="true" class="filter-active"></div>
+    </li>
+    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+      <input type="radio" name="filter2" id="filter2-1" onclick="changeState()" value = "CD" class="sr-only">
+      <label for="filter2-1" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
+        Crohn's Disease
+      </label>
+    </li>
+    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+      <input type="radio" name="filter2" id="filter2-2" onclick="changeState()" value = "UC" class="sr-only">
+      <label for="filter2-2" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
+        Ulcerative Colitis
+      </label>
+    </li>
+  </ul>
 
-
+  <ul id="filter3" class="filter-switch inline-flex items-center relative h-10 p-1 space-x-1 bg-gray-200 rounded-md font-medium text-black-600 my-4 border border-gray-400">
+    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+      <input type="radio" name="filter3" id="filter3-0" onclick="changeState()" value = "A" class="sr-only" checked>
+      <label for="filter3-0" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
+        Diagnosis
+      </label>
+      <div aria-hidden="true" class="filter-active"></div>
+    </li>
+    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+      <input type="radio" name="filter3" id="filter3-1" onclick="changeState()" value = "B" class="sr-only">
+      <label for="filter3-1" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
+       1/2 Years
+      </label>
+    </li>
+    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+      <input type="radio" name="filter3" id="filter3-2" onclick="changeState()" value = "C" class="sr-only">
+      <label for="filter3-2" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
+        2/4 Years
+      </label>
+    </li>
+    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
+      <input type="radio" name="filter3" id="filter3-3" onclick="changeState()" value = "D" class="sr-only">
+      <label for="filter3-3" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
+        6 Years
+      </label>
+    </li>
+  </ul>
+</div>
   <div id="guiplace"> </div>
 
   <div id="3d-graph"></div>
 
 <script>
+
+function hideShow(val){
+  if(val==0){
+    document.getElementById("nqText").style.display = "none";
+    document.getElementById("nodequeryMain").style.display = "none";
+    document.getElementById("screenshotButton").style.display = "none";
+    document.getElementById("resetButton").style.display = "none";
+    document.getElementById("radioButtons").style.display = "none";
+    document.getElementById("hideShow").innerHTML =  "<u>show controls</u>";
+    document.getElementById("hideShow").value = 1;
+
+  }
+  else{
+    document.getElementById("nqText").style.display = "block";
+    document.getElementById("nodequeryMain").style.display = "block";
+    document.getElementById("screenshotButton").style.display = "inline-block";
+    document.getElementById("resetButton").style.display = "inline-block";
+    document.getElementById("radioButtons").style.display = "block";
+    document.getElementById("hideShow").innerHTML =  "<u>hide controls</u>";
+    document.getElementById("hideShow").value = 0;
+  }
+}
 
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
@@ -162,8 +260,8 @@ function addOptions(addText, selectElement)
     }
 
     //////////////// JSON FILE ////////////////
-    var finalDataObj = Network_CD_time_A_TH_network
-    var nodesList = Network_CD_time_A_TH_nodes
+    var finalDataObj = Network_HC_time_A_TH_network
+    var nodesList = Network_HC_time_A_TH_nodes
     //////////////// GRAPH CREATION ////////////////
      var elem = document.getElementById('3d-graph');
      var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer   : true}})
@@ -395,29 +493,6 @@ function addOptions(addText, selectElement)
 
     const CAMERA_DISTANCE2NODES_FACTOR = 170;
 
-  
-file_names = ["Network_CD_time_A_TH_0.01","Network_CD_time_B_TH_0.01","Network_CD_time_C_TH_0.01","Network_CD_time_D_TH_0.01","Network_HC_time_A_TH_0.01","Network_HC_time_B_TH_0.01","Network_HC_time_C_TH_0.01","Network_HC_time_D_TH_0.01","Network_UC_time_A_TH_0.01","Network_UC_time_B_TH_0.01","Network_UC_time_C_TH_0.01","Network_UC_time_D_TH_0.01"]
-const fnames = {};
- for (const key of file_names) {
-  fnames[key] = key;
- }
-
- const PARAMS = {
-  Networks: "Network_CD_time_A_TH_0.01",
-  Background : "#ffffff"
-};
-
-const pane = new Tweakpane.Pane({
-  container: document.getElementById('guiplace'),
-});
-
-pane.addInput(PARAMS, 'Networks',{options: fnames}).on('change', (ev) => {
-  changeState();
-  });
-
-pane.addInput(PARAMS, 'Background').on('change', (ev) => {
-  updateBackground();
-  });
 
 //////////////////////////////////////////////
     function updateSearch() {
@@ -441,11 +516,7 @@ pane.addInput(PARAMS, 'Background').on('change', (ev) => {
           }
       })
       }
-        
-    function updateBackground() {
-      Graph.backgroundColor(PARAMS.Background)
 
-    }
 
     function toggleLabels() {
       Graph.nodeThreeObject(node =>  (node.group == '2')
@@ -457,52 +528,57 @@ pane.addInput(PARAMS, 'Background').on('change', (ev) => {
 
 
     function changeState(){
-    var new_file_name = PARAMS.Networks
-    if(new_file_name == "Network_CD_time_A_TH_0.01"){
+    
+    var disease = document.querySelector('input[name="filter2"]:checked').value;
+   
+    var tp = document.querySelector('input[name="filter3"]:checked').value;
+    
+
+    if(disease == "CD" && tp == "A"){
       finalDataObj = Network_CD_time_A_TH_network
       nodesList = Network_CD_time_A_TH_nodes
     }
-    else if (new_file_name == "Network_CD_time_B_TH_0.01"){
+    else if (disease == "CD" && tp == "B"){
       finalDataObj = Network_CD_time_B_TH_network
       nodesList = Network_CD_time_B_TH_nodes
     }
-    else if (new_file_name == "Network_CD_time_C_TH_0.01"){
+    else if (disease == "CD" && tp == "C"){
       finalDataObj = Network_CD_time_C_TH_network
       nodesList = Network_CD_time_C_TH_nodes
     }
-    else if (new_file_name == "Network_CD_time_D_TH_0.01"){
+    else if (disease == "CD" && tp == "D"){
       finalDataObj = Network_CD_time_D_TH_network
       nodesList = Network_CD_time_D_TH_nodes
     }
-    else if (new_file_name == "Network_HC_time_A_TH_0.01"){
+    else if (disease == "HC" && tp == "A"){
       finalDataObj = Network_HC_time_A_TH_network
       nodesList = Network_HC_time_A_TH_nodes
     }
-    else if (new_file_name == "Network_HC_time_B_TH_0.01"){
+    else if (disease == "HC" && tp == "B"){
       finalDataObj = Network_HC_time_B_TH_network
       nodesList = Network_HC_time_B_TH_nodes
     }
-    else if (new_file_name == "Network_HC_time_C_TH_0.01"){
+    else if (disease == "HC" && tp == "C"){
       finalDataObj = Network_HC_time_C_TH_network
       nodesList = Network_HC_time_C_TH_nodes
     }
-    else if (new_file_name == "Network_HC_time_D_TH_0.01"){
+    else if (disease == "HC" && tp == "D"){
       finalDataObj = Network_HC_time_D_TH_network
       nodesList = Network_HC_time_D_TH_nodes
     }
-    else if (new_file_name == "Network_UC_time_A_TH_0.01"){
+    else if (disease == "UC" && tp == "A"){
       finalDataObj = Network_UC_time_A_TH_network
       nodesList = Network_UC_time_A_TH_nodes
     }
-    else if (new_file_name == "Network_UC_time_B_TH_0.01"){
+    else if (disease == "UC" && tp == "B"){
       finalDataObj = Network_UC_time_B_TH_network
       nodesList = Network_UC_time_B_TH_nodes
     }
-    else if (new_file_name == "Network_UC_time_C_TH_0.01"){
+    else if (disease == "UC" && tp == "C"){
       finalDataObj = Network_UC_time_C_TH_network
       nodesList = Network_UC_time_C_TH_nodes
     }
-    else if (new_file_name == "Network_UC_time_D_TH_0.01"){
+    else if (disease == "UC" && tp == "D"){
       finalDataObj = Network_UC_time_D_TH_network
       nodesList = Network_UC_time_D_TH_nodes
     }
