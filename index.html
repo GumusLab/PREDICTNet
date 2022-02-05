@@ -9,7 +9,6 @@
   <script src="libraries/rainbowvis.js"></script>
   <script src="https://github.com/mrdoob/three.js/blob/dev/examples/jsm/deprecated/Geometry.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tweakpane@3.0.2/dist/tweakpane.min.js"></script>
   <script src="js/fstdropdown.js"></script>
   <script src="js/networks.js"></script>
   <link rel="stylesheet" href="css/fstdropdown.css">
@@ -18,25 +17,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style type="text/css">
-    #gui {
-    position: absolute;
-    left: 2px;   /* position inside relatively positioned parent */
-    top: 140px;
-    z-index: 10;   /* adjust as needed */
-    }
-    #tp {
-    position: absolute;
-    left: 2px;   /* position inside relatively positioned parent */
-    top: 140px;
-    z-index: 10;   /* adjust as needed */
-    }
 
     #logo{
       position: absolute;
       margin-top: 10px;
       z-index:2;
     }
-  
+    #textdiv {
+  position: absolute;
+  font-size: 10px;
+  background-color: #eef2f7;
+  width: 290px;
+  border: 5px solid #b1b1b1;
+  padding: 10px;
+  top:330px;
+  margin: 20px;
+  z-index: 20;
+}
     .button {
   border: none;
   color: white;
@@ -50,7 +47,7 @@
   cursor: pointer;
   position: absolute;
   left: 27px;   /* position inside relatively positioned parent */
-  top: 340px;
+  top: 270px;
   z-index: 10; 
 }
 
@@ -74,7 +71,7 @@
   cursor: pointer;
   position: absolute;
   left: 165px;   /* position inside relatively positioned parent */
-  top: 340px;
+  top: 270px;
   z-index: 10; 
 }
 
@@ -88,7 +85,7 @@
   position: absolute;
   font-size: 14px;
   left: 30px;   /* position inside relatively positioned parent */
-  top: 267px;
+  top: 197px;
   z-index: 10; 
 }
 
@@ -98,17 +95,19 @@ button.link { background:none; border:none;
   position: absolute;
   font-size: 10px;
   left: 10px;   /* position inside relatively positioned parent */
-  top: 140px;
+  top: 81px;
+  font-weight: bold;
   z-index: 10; }
 
-#guiplace{
-  font-size: 55px;
+  button.link2 { background:none; border:none; 
+  font-family: Helvetica, sans-serif;
   position: absolute;
-  left: 2px;   /* position inside relatively positioned parent */
-  top: 210px;
-  z-index: 10; 
-  width: 270px;
-}
+  font-size: 10px;
+  left: 22px;   /* position inside relatively positioned parent */
+  top: 335px;
+  z-index: 10; }
+
+
 
 body {
   font-family: 'Lato', sans-serif;
@@ -117,14 +116,14 @@ body {
 #filter2 {
     position: absolute;
     left: 5px;   /* position inside relatively positioned parent */
-    top: 150px;
+    top: 80px;
     z-index: 15;   /* adjust as needed */
     }
 
   #filter3 {
   position: absolute;
   left: 25px;   /* position inside relatively positioned parent */
-  top: 200px;
+  top: 130px;
   z-index: 15;   /* adjust as needed */
   }
   </style>
@@ -139,7 +138,9 @@ body {
   <p class="p1" id= "nqText" >Node Query</p>
 
   <button class="link" id="hideShow" value=0 onclick="hideShow(this.value)"><u>hide controls</u></button>
-  
+
+  <button class="link2" id="hideInfo" value=0 onclick="hideInfo(this.value)"><u><b>hide info</b></u></button>
+
 <p id="nodequeryMain">
     <select class='fstdropdown-select' id="nodequery" onchange="updateSearch()">
         <option value="">--</option>
@@ -200,7 +201,18 @@ body {
     </li>
   </ul>
 </div>
-  <div id="guiplace"> </div>
+  <div id="textdiv"> 
+    <p style="font-size:12px"><b>PREDICT-Net: Multi-omics network analyses to identify key drivers of disease initiation and progression in the preclinical phase of inflammatory bowel disease (IBD).</b></p>
+    <p><br></p>
+    <p style="font-size:10px">Funding: Support for this tool has been provided by the Kenneth Rainin Foundation (Grant #20210021)</p>
+    <p><br></p>
+    <p style="font-size:10px"><b>Literature:</b></p>
+    <p>
+      <b>1. </b>Torres, J., Petralia, F., Sato, T., Wang, P., Telesco, S.E., Strauss, R., Li, X.J., Laird, R.M., Gutierrez, R.L., Porter, C.K. and Plevy, S., 2020. Serum biomarkers identify patients who will develop inflammatory bowel diseases up to 5 years before diagnosis. Gastroenterology, 159(1), pp.96-104.<br>
+      <b>2. </b>Porter CK, Riddle MS, Gutierrez RL, et al. Cohort profile of the PRoteomic Evaluation and Discovery in an IBD Cohort of Tri-service Subjects (PREDICTS) study: Rationale, organization, design, and baseline characteristics. Contemporary Clinical Trials Communications 2019; 14: 100345. 
+    </p>
+    
+  </div>
 
   <div id="3d-graph"></div>
 
@@ -225,6 +237,19 @@ function hideShow(val){
     document.getElementById("radioButtons").style.display = "block";
     document.getElementById("hideShow").innerHTML =  "<u>hide controls</u>";
     document.getElementById("hideShow").value = 0;
+  }
+}
+
+function hideInfo(val){
+  if(val==0){
+    document.getElementById("textdiv").style.display = "none";
+    document.getElementById("hideInfo").innerHTML =  "<u><b>show info</b></u>";
+    document.getElementById("hideInfo").value = 1;
+  }
+  else{
+    document.getElementById("textdiv").style.display = "inline-block";
+    document.getElementById("hideInfo").innerHTML =  "<u><b>hide info</b></u>";
+    document.getElementById("hideInfo").value = 0;
   }
 }
 
@@ -278,7 +303,7 @@ function addOptions(addText, selectElement)
           ? "#808080"
           : "#808080")
         
-        .linkOpacity(0.5)
+        .linkOpacity(0.4)
         .onNodeClick(node => {
           // Aim at node from outside it
           const distance = 40;
@@ -303,11 +328,11 @@ function addOptions(addText, selectElement)
         function CreateSource(node)
         {
           var node_size
-          if (node["source_attr_2"] == null){ // SourceNodeSize
-            node_size = 1
+          if (node["colorCode"] == 0){ // SourceNodeSize
+            node_size = .7
           }
           else{
-            var node_size = node["source_attr_2"] + 0.5
+            node_size = 1.2
           }
           var mesh = (new THREE.Mesh(    
           new THREE.SphereGeometry(node_size*8,25,25),
@@ -324,144 +349,18 @@ function addOptions(addText, selectElement)
         //sprite.position.y = 15;
         mesh.add(sprite);
         
-
         var node_color
-          if (node['source_attr_1'] == null){ // SourceNodeColor
-            node_color = 0.5
+          if (node['colorCode'] == 0){ // SourceNodeColor
+            node_color = "0xffa500"
           }
-          else{
-            var node_color = node['source_attr_1']
+          else if (node['colorCode'] == 1){
+            node_color = "0x6e9af8"
           }
-
-        mesh.material.color.setHex(colors_general(node_color, false, 'ffffb3', 'yellow', 'orange', '#ee9a00', '#ff8c00'));
+          
+        mesh.material.color.setHex(node_color);
         return mesh
         }
 
-        function CountPartitions(data)
-        {
-          var num_sites_dict = {}
-          for (var node in data['nodes'])
-          {
-            if (data['nodes'][node]['group'] == '2')
-             {
-              num_sites = Object.keys(data['nodes'][node]['target_attr_1']).length
-              var id = data['nodes'][node]['id']
-              num_sites_dict[id] = num_sites
-             }
-          }
-          return num_sites_dict
-        }
-
-        function CreateTarget(node)
-        {
-          var node_size
-          if (node["target_attr_2"] == null){ // TargetNodeSize
-            node_size = 1
-          }
-          else{
-            var node_size = node["target_attr_2"] + 0.5
-          }
-
-          var num_sites_dict = CountPartitions(finalDataObj)
-          if (num_sites_dict[node['id']] > 1) { // partitions
-            verticalPartitions = num_sites_dict[node['id']]
-          }
-          else // no partitions
-            verticalPartitions = 1
-          
-          radialPartitions = 25
-          var mesh = new THREE.Mesh(
-          new THREE.CylinderGeometry(node_size*8, node_size*8, node_size*8*verticalPartitions, radialPartitions, verticalPartitions),
-          new THREE.MeshLambertMaterial({
-            transparent: false,
-            depthWrite: false,
-            opacity: 1,
-            wireframe: false,
-            emissive: "#181818",
-            vertexColors: THREE.FaceColors,
-          }));
-
-          if (!(verticalPartitions == 1))
-          {
-            for (var i = 0; i < radialPartitions*2*(verticalPartitions); i+=(verticalPartitions*2))
-            {
-                  j = 0
-                  for (var position in node['target_attr_1']) {
-                    target_attr_1 = Object.values(node['target_attr_1'][position])
-                    mesh.geometry.faces[i+(j*2)].color.setHex(colors_target(target_attr_1)); 
-                    mesh.geometry.faces[i+(j*2)+1].color.setHex(colors_target(target_attr_1));
-                    var x = 0
-                    for(x = i+(j*2)+2;x<i+(j*2)+27;x++){
-                      mesh.geometry.faces[x].color.setHex("0x949494");                  
-                    }
-                    for(x = i+(j*2)+27;x<i+(j*2)+52;x++){
-                      mesh.geometry.faces[x].color.setHex("0xcccccc");                  
-                    }
-  
-                    j = j + 1
-                    }
-            }
-          }
-          else
-          {
-            // TargetNodeColor does not exist 
-            if (Object.values(node['target_attr_1'][0])[0] == null)  { 
-              target_attr_1 = "null"
-            }
-            else  { // TargetNodeColor exists  
-              target_attr_1 = Object.values(node['target_attr_1'][0])
-            }
-            var face = 0
-            for(face = 0; face<50;face++){
-              mesh.geometry.faces[face].color.setHex(colors_target(target_attr_1));
-            }
-            face = 0
-            for(face = 50; face<75;face++){
-              mesh.geometry.faces[face].color.setHex("0x949494");
-            }
-            for(face = 75; face<100;face++){
-              mesh.geometry.faces[face].color.setHex("0xcccccc");
-            }
-            //mesh.geometry.faces[55].color.setHex("0xcccccc");   
-            //mesh.material.color.setHex(colors_target(target_attr_1));
-
-          }
-
-        if(PARAMS.Labels)
-        {
-          const sprite = new SpriteText(node.id);
-          sprite.color = 'rgb(0,0,0)';
-          sprite.textHeight = 5;
-          //sprite.position.y = 15;
-          mesh.add(sprite);
-        }
-          return mesh
-          }
-
-        function colors_target (l2fc_value) {
-          // https://github.com/anomal/RainbowVis-JS look at example.html for usage
-          // https://stackoverflow.com/questions/3080421/javascript-color-gradient
-
-            var threshold_max = PARAMS.MaxFold // 1
-            var threshold_min = PARAMS.MinFold // -1
-            var rainbow = new Rainbow(); 
-            rainbow.setNumberRange(-3, 3);
-            rainbow.setSpectrum('2600e6', '2A00FF', '5533FF', '7F66FF', 'AA99FF', 'D4CCFF', 'cccccc', 'FFCCDD', 'FF99BB', 'FF6699', 'FF3377', 'FF0055', 'CC0044')
-
-            if (l2fc_value >= threshold_min && l2fc_value <= threshold_max || l2fc_value=="null") {
-              return "0xcccccc"
-            }
-            if (l2fc_value < threshold_min) {
-              var hexColour = rainbow.colourAt(l2fc_value-threshold_min);
-              var stringColor = '0x' + hexColour
-              return stringColor
-            } 
-            else {
-              var hexColour = rainbow.colourAt(l2fc_value-threshold_max);
-              var stringColor = '0x' + hexColour
-              return stringColor
-            } 
-        }
 
         function colors_general (l2fc_value, isHexFlag, color1, color2, color3, color4, color5) {
             var rainbow = new Rainbow(); 
@@ -518,13 +417,7 @@ function addOptions(addText, selectElement)
       }
 
 
-    function toggleLabels() {
-      Graph.nodeThreeObject(node =>  (node.group == '2')
-      
-          ? CreateTarget(node) // SUBSTRATES
-          : CreateSource(node)) // KINASES
 
-    }
 
 
     function changeState(){
@@ -597,7 +490,7 @@ function addOptions(addText, selectElement)
           ? "#808080"
           : "#808080")
         
-        .linkOpacity(0.5)
+        .linkOpacity(0.4)
         .onNodeClick(node => {
           // Aim at node from outside it
           const distance = 40;
