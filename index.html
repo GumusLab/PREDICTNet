@@ -1,533 +1,233 @@
 <head>
-  <style> body { margin: 0; } </style>
-  <script src="libraries/3d-force-graph.js"></script>
-  <script src="libraries/index.min.js"></script>
-  <script src="libraries/three.js"></script>
-  <script src="libraries/three-spritetext.min.js"></script>
-  <script src="libraries/dat.gui.js"></script>
-  <script src="libraries/d3.v3.min.js" charset="utf-8"></script>
-  <script src="libraries/rainbowvis.js"></script>
-  <script src="https://github.com/mrdoob/three.js/blob/dev/examples/jsm/deprecated/Geometry.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="js/fstdropdown.js"></script>
-  <script src="js/networks.js"></script>
-  <link rel="stylesheet" href="css/fstdropdown.css">
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.4.6/tailwind.min.css'><link rel="stylesheet" href="./style.css">
+<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PREDICTNet</title>
+<style type="text/css">
 
-  <style type="text/css">
-
-    #logo{
-      position: absolute;
-      margin-top: 10px;
-      z-index:2;
-    }
-    #textdiv {
-  position: absolute;
-  font-size: 10px;
-  background-color: #eef2f7;
-  width: 290px;
-  border: 5px solid #b1b1b1;
-  padding: 10px;
-  top:330px;
-  margin: 20px;
-  z-index: 20;
-}
-    .button {
-  border: none;
-  color: white;
-  padding: 16px 30px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  position: absolute;
-  left: 27px;   /* position inside relatively positioned parent */
-  top: 270px;
-  z-index: 10; 
+ @font-face {
+  font-family: 'Jumper-Bold';
+  src:  url('/font/Jumper-Bold.woff') format('woff');
 }
 
-.button1 {
-  background-color: #eef2f7; 
-  color: rgb(0, 0, 0); 
-  border: 0px solid #000000;
-  border-radius: 8px;
-  font-weight: lighter;
-}
+    #uploadText {
+        margin-left:auto;
+        margin-right:auto;
+        display:block;
+        position: relative;
+    } 
 
-.button2 {
-  border: none;
-  padding: 16px 45px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  position: absolute;
-  left: 165px;   /* position inside relatively positioned parent */
-  top: 270px;
-  z-index: 10; 
-}
-
-.button1:hover {
-  background-color: #b1b1b1;
-  color: rgb(0, 0, 0);
-}
-
-.p1 {
-  font-family: Helvetica, sans-serif;
-  position: absolute;
-  font-size: 14px;
-  left: 30px;   /* position inside relatively positioned parent */
-  top: 197px;
-  z-index: 10; 
-}
-
-
-button.link { background:none; border:none; 
-  font-family: Helvetica, sans-serif;
-  position: absolute;
-  font-size: 10px;
-  left: 10px;   /* position inside relatively positioned parent */
-  top: 81px;
-  font-weight: bold;
-  z-index: 10; }
-
-  button.link2 { background:none; border:none; 
-  font-family: Helvetica, sans-serif;
-  position: absolute;
-  font-size: 10px;
-  left: 22px;   /* position inside relatively positioned parent */
-  top: 335px;
-  z-index: 10; }
-
-
-
-body {
-  font-family: 'Lato', sans-serif;
-}
-
-#filter2 {
-    position: absolute;
-    left: 5px;   /* position inside relatively positioned parent */
-    top: 80px;
-    z-index: 15;   /* adjust as needed */
+    #NetworkButton, #existingNetworksButton, #text, #ASButton{
+      margin-left:auto;
+      margin-right:auto;
+      display:block;
+      position: relative;
+      z-index: 5;
     }
 
-  #filter3 {
-  position: absolute;
-  left: 5px;   /* position inside relatively positioned parent */
-  top: 130px;
-  z-index: 15;   /* adjust as needed */
-  }
-  </style>
+    #lowerButtons {
+      text-align: center;
+
+    }
+    #contactButton {
+      margin-left: 5.2%;
+      left: -2.5%;
+      display:inline-block;
+      position: relative;
+      z-index: 5;
+      background: none; 
+      cursor: pointer;
+      margin-top: 5px;
+      margin-bottom: -5px;  
+    }
+
+    #faqButton, #tutorialButton {
+      margin-left: 6.5%;
+      left: -3%;
+      display:inline-block;
+      position: relative;
+      z-index: 5;
+      background: none; 
+      cursor: pointer;
+      margin-top: 5px;
+      margin-bottom: -5px;
+    }
+    
+    #NetworkButton,#existingNetworksButton, #ASButton{
+      border: none; 
+      background: none; 
+      cursor: pointer;
+      width: 28.5%;
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+
+    .MountSinailogo {       
+        margin-left: 0px;
+        margin-right: auto;
+        width: 7%;
+    }
+
+    #footer {
+        position: fixed;
+        bottom: 0%;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #licenseDiv{
+    position: fixed;
+    bottom: 5px;
+    right: 0px;
+    z-index: 1;
+    padding: 0px;
+    margin: 0px;
+}
+
+    #uploadText {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+    position: relative;
+} 
+
+
+    @font-face {
+    font-family: "helveticaBold";
+    src: url("fonts/helvetica-bold-webfont.woff") format("woff");
+    }
+</style>
+
 </head>
 
-<body>
-  <svg xmlns="http://www.w3.org/2000/svg" id="logo" width="170" height="40" viewBox="0 0 230 54">
-    <rect id="Rectangle_1488" data-name="Rectangle 1488" width="230" height="54"/>
-    <text id="PREDICTNet" transform="translate(113 37)" fill="#fff" font-size="30" font-family="Helvetica-Bold, Helvetica" font-weight="700" letter-spacing="0.1em"><tspan x="-96.586" y="0">PREDICTNet</tspan></text>
-  </svg>
 
-  <p class="p1" id= "nqText" >Node Query</p>
+<body >
 
-  <button class="link" id="hideShow" value=0 onclick="hideShow(this.value)"><u>hide controls</u></button>
+<div>
 
-  <button class="link2" id="hideInfo" value=0 onclick="hideInfo(this.value)"><u><b>hide info</b></u></button>
+<svg id="uploadText" style = "left:2.1%;margin-bottom:-0.5%; margin-top:-1%" xmlns="http://www.w3.org/2000/svg" height="70%" width="70%" viewBox="0 0 765 568.502">
+  <text id="" transform="translate(40 308.502)" font-size="16" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="12">Multi-omics network analyses</tspan><tspan y="12" xml:space="preserve" font-family="Helvetica" font-weight="400"> to identify key drivers of disease initiation and progression in the </tspan><tspan x="0" y="28" font-family="Helvetica" font-weight="400">preclinical phase of </tspan><tspan y="28">inflammatory bowel disease</tspan><tspan y="28" xml:space="preserve" font-family="Helvetica" font-weight="400"> (IBD).</tspan><tspan font-family="Helvetica" font-weight="400"><tspan x="0" y="44"></tspan><tspan x="0" y="60">Funding: Support for this tool has been provided by the Kenneth Rainin Foundation (Grant </tspan><tspan x="0" y="76">#20210021)</tspan><tspan x="0" y="92"></tspan></tspan><tspan x="0" y="108">Literature:</tspan><tspan font-family="Helvetica" font-weight="400"><tspan x="0" y="124">1. Torres, J., Petralia, F., Sato, T., Wang, P., Telesco, S.E., Strauss, R., Li, X.J., Laird, R.M., Gutierrez, </tspan><tspan x="0" y="140">R.L., Porter, C.K. and Plevy, S., 2020. Serum biomarkers identify patients who will develop </tspan><tspan x="0" y="156">inflammatory bowel diseases up to 5 years before diagnosis. Gastroenterology, 159(1), pp.96-104.</tspan><tspan x="0" y="172"></tspan><tspan x="0" y="188">2. Porter CK, Riddle MS, Gutierrez RL, et al. Cohort profile of the PRoteomic Evaluation and </tspan><tspan x="0" y="204">Discovery in an IBD Cohort of Tri-service Subjects (PREDICTS) study: Rationale, organization, </tspan><tspan x="0" y="220">design, and baseline characteristics. Contemporary Clinical Trials Communications 2019; 14: 100345.</tspan></tspan></text>
+  <g id="Group_232" data-name="Group 232" transform="translate(-386.836 -5.498)">
+    <text id="PREDICTNet" transform="translate(857 201)" font-size="74" font-family="Jumper-BoldRegular, Jumper-Bold" font-weight="700"><tspan x="-224.22" y="0">PREDICTNet</tspan></text>
+    <g id="layer1" transform="matrix(0.723, -0.691, 0.691, 0.723, 386.836, 173.931)">
+      <g id="Group_231" data-name="Group 231">
+        <path id="Path_86" data-name="Path 86" d="M118.457.1C111.949,1.247,108.35,2.587,104.1,5.42A32.457,32.457,0,0,0,89.743,27.664a44.564,44.564,0,0,0,.077,10.873c.077.728-.153,1.072-1.225,1.57a69.7,69.7,0,0,1-8.959,3.407,6.5,6.5,0,0,0-1.493.536c-.689.268-3.1,1.225-5.437,2.067-2.3.842-5.666,2.067-7.389,2.718A35.214,35.214,0,0,1,61.8,50.022a14.731,14.731,0,0,1-2.412-2.986,32.809,32.809,0,0,0-20.559-13.9,38.844,38.844,0,0,0-12.634,0A32.453,32.453,0,0,0,0,64.954,26.669,26.669,0,0,0,1.955,76.248a32.481,32.481,0,0,0,41.08,19.525c1.608-.536,2.067-.574,2.527-.153.5.421,12.711,20.483,13.132,21.593a4.275,4.275,0,0,0,.613.957c1.187,1.417.919,2.182-2.3,7.159-9.686,14.931-10.337,15.812-11.1,15.812a2.444,2.444,0,0,1-1.187-.306,32.919,32.919,0,0,0-6.126-1.952c-2.029-.536-10.567-.536-12.6-.038-10.605,2.718-18.185,8.538-22.588,17.42a32.762,32.762,0,0,0,0,29.1,32.6,32.6,0,0,0,22.4,17.3,37.523,37.523,0,0,0,14.166-.23,32.232,32.232,0,0,0,16.539-9.992,15.274,15.274,0,0,1,3.407-3.063c.306,0,7.159,3.331,15.276,7.389,14.587,7.313,14.74,7.427,14.663,8.538-.689,8.576-.536,10.911,1.072,15.927,3.561,11.179,12.558,19.334,24.464,22.167a43.632,43.632,0,0,0,13.017,0c15.391-3.637,26.034-16.73,26.034-32.006a33.765,33.765,0,0,0-4.288-15.965c-.727-1.187-1-1.991-.8-2.374.345-.613,3.561-4.1,8.882-9.61,10.643-11.064,18.071-18.836,30.475-31.892a28.833,28.833,0,0,1,3.254-3.139,20.287,20.287,0,0,1,2.91,1.531,32.128,32.128,0,0,0,26.876,2.833,33.265,33.265,0,0,0,21.555-24.273,43.634,43.634,0,0,0,0-13.017c-2.374-10.031-9.15-18.722-17.688-22.7-10.452-4.9-21.1-4.364-31.088,1.455-2.259,1.34-3.1,1.646-3.637,1.378-.842-.5-42.956-42.65-42.956-43.033a26.743,26.743,0,0,1,1.723-3.254c5.054-8.652,6.126-18.109,3.025-27.183A33.163,33.163,0,0,0,129.177.787,47.774,47.774,0,0,0,118.457.1Zm9.38,8.767a24.6,24.6,0,0,1,17.688,29.671,25.112,25.112,0,0,1-12.672,15.7,24.37,24.37,0,0,1-31.547-34.725A26.85,26.85,0,0,1,115.7,8.866,35.879,35.879,0,0,1,127.837,8.866Zm-89.7,32.5a25.606,25.606,0,0,1,10.682,5.666A24.41,24.41,0,0,1,26.687,88.729,23.849,23.849,0,0,1,11.871,77.971C9.191,73.874,8.2,70.314,8.2,64.8a22.815,22.815,0,0,1,6.355-16.271,25.223,25.223,0,0,1,10.222-6.585,18.106,18.106,0,0,1,7.236-1.11A30.031,30.031,0,0,1,38.135,41.37ZM94.606,50.1a38.8,38.8,0,0,0,3.867,4.939l2.3,2.489L98.74,60.781c-1.149,1.761-2.871,4.518-3.905,6.087-1,1.57-3.714,5.781-6.049,9.38-2.335,3.561-4.594,7.083-4.977,7.734-.421.689-1,1.263-1.34,1.263-.306,0-4.747-2.106-9.878-4.671-8.193-4.1-9.3-4.747-9.15-5.437,1.378-6.2,1.493-7.159,1.34-11.332a33.848,33.848,0,0,0-.459-5.015c-.345-.766.919-1.417,8-3.905,4.939-1.761,11.064-4.02,15.123-5.551a37.873,37.873,0,0,1,4.824-1.57C92.883,47.725,93.5,48.338,94.606,50.1ZM163.787,80.23l21.784,21.784-1.685,2.795a39.586,39.586,0,0,0-2.412,4.556c-1.8,4.518-1.685,4.326-3.025,4.058-.689-.115-2.527-.383-4.1-.613-1.57-.191-4.747-.613-7.083-.957-2.3-.306-5.743-.766-7.619-1-5.092-.613-5.054-.574-5.322-3.675A32.863,32.863,0,0,0,136.8,80.919a32.381,32.381,0,0,0-29.02-.421,35.4,35.4,0,0,0-11.447,9.227c-.727.919-1.531,1.646-1.8,1.646-.689,0-4.02-1.914-4.02-2.335a29.215,29.215,0,0,1,2.221-3.829c1.187-1.914,2.45-3.867,2.757-4.4.306-.5,2.106-3.293,3.982-6.164,1.914-2.91,4.4-6.738,5.551-8.538,2.489-3.829,2.948-4.326,3.867-3.829,2.757,1.493,8.614,2.68,13.017,2.68a31.9,31.9,0,0,0,17.8-5.283,21.278,21.278,0,0,1,2.106-1.225C141.926,58.445,151.8,68.246,163.787,80.23ZM68.878,87.848c6.355,3.216,8.806,4.671,8.767,5.13A21.125,21.125,0,0,1,75.5,96.807c-1.149,1.723-3.254,4.977-4.709,7.2-5.169,8.04-5.245,8.117-5.9,7.5a9.135,9.135,0,0,1-1.378-2.029c-.651-1.263-6.049-10.337-7.083-11.983a8.735,8.735,0,0,1-.651-1.149c-.153-.306-.919-1.646-1.761-2.986L52.53,90.949l2.642-2.757A35.033,35.033,0,0,0,58.5,84.364c.383-.574.881-1.034,1.149-1.034C59.881,83.331,64.054,85.36,68.878,87.848Zm56.433-2.221A24.911,24.911,0,0,1,139.4,92.94a24.6,24.6,0,0,1,5.7,9.533,16.85,16.85,0,0,1,1.072,7.274c-.038,5.934-1.263,9.686-4.824,14.625a23.6,23.6,0,0,1-3.484,3.829c-.881.689-1.8,1.455-2.067,1.685-1,.957-6.2,3.178-8.806,3.752a23.569,23.569,0,0,1-15.735-1.953,24.311,24.311,0,0,1-3.254-1.8c-.268-.23-1.187-1-2.067-1.684-3.025-2.374-6.126-7.312-7.619-12.136a26.307,26.307,0,0,1,.191-13.017c2.527-7.772,8.27-13.859,15.352-16.233A21.911,21.911,0,0,1,125.31,85.628ZM88.212,97.5A11.13,11.13,0,0,1,90.7,99.028a16.554,16.554,0,0,1-.536,4.02,32.052,32.052,0,0,0,12.022,32.466,30.238,30.238,0,0,0,12.634,5.973l2.68.651V179.2l-2.68.651a39.3,39.3,0,0,0-4.4,1.3c-3.561,1.34-3.369,1.455-6.126-3.1-1.378-2.259-2.565-4.288-2.642-4.518s-1.493-2.565-3.1-5.207-3.025-5.054-3.178-5.36a8.722,8.722,0,0,0-.651-1.148c-.766-1.187-5.283-8.691-6.2-10.337-.536-.957-4.824-8.155-9.495-16.042-4.709-7.887-8.614-14.663-8.691-15.008-.115-.383.5-1.646,1.34-2.91,1.493-2.144,5.513-8.346,10.26-15.735,2.45-3.867,3.561-5.436,3.829-5.436A20.809,20.809,0,0,1,88.212,97.5Zm127.643.574a23.34,23.34,0,0,1,13.438,7.542,24.3,24.3,0,0,1,0,32.772A24.268,24.268,0,1,1,194.3,104.77a24.469,24.469,0,0,1,11.639-6.509c1.263-.268,2.488-.536,2.68-.574C209.653,97.343,213.481,97.573,215.855,98.071Zm-57.2,20.865c1.57.191,4.862.613,7.274.957s6.2.842,8.384,1.149c2.45.306,4.1.689,4.288,1a5.475,5.475,0,0,1,.345,2.144,36.7,36.7,0,0,0,2.718,11.026c.766,1.723,3.446,6.087,3.829,6.24.919.345,0,1.723-3.331,5.245-5.551,5.781-9.533,9.954-17.956,18.76-4.211,4.4-9.648,10.107-12.1,12.634-2.412,2.527-5.245,5.513-6.279,6.585-1.876,2.106-2.795,2.45-3.637,1.455a39.73,39.73,0,0,0-7.466-4.479,39.5,39.5,0,0,0-6.891-2.106l-1.531-.345V142.1l1.531-.345a31.432,31.432,0,0,0,13.438-6.011c5.437-4.1,8.231-7.887,11.6-15.774.727-1.723.881-1.838,1.838-1.646C155.326,118.477,157.087,118.745,158.657,118.936ZM65.892,129.158c.153.383,1.3,2.412,2.6,4.518s2.45,4.1,2.6,4.4c.306.651.842,1.57,4.1,6.891,1.225,1.991,7.159,11.983,13.208,22.205S99.544,185.9,99.736,186.088c.536.613.459.842-1.225,2.795-.881,1-1.914,2.221-2.3,2.718a32.181,32.181,0,0,0-1.953,2.795c-.727,1.225-1.378,1.876-1.8,1.8C91.39,196,63.326,181.724,63.326,181.379c0-.191.345-1.685.766-3.331a35.018,35.018,0,0,0-.8-17.573,34.756,34.756,0,0,0-7.772-12.443,6.745,6.745,0,0,1-1.761-2.221,27.959,27.959,0,0,1,2.6-4.518c1.417-2.182,3.829-5.972,5.4-8.385C64.552,128.584,65.394,127.818,65.892,129.158ZM38.135,147.114a25.929,25.929,0,0,1,14.051,9.495,23.156,23.156,0,0,1,2.871,5.207c2.45,5.59,2.221,13.591-.574,19.411a25.834,25.834,0,0,1-16.271,13.285,28.62,28.62,0,0,1-11.409,0,25.263,25.263,0,0,1-17.573-16c-.727-1.991-.842-3.139-.842-7.7s.115-5.7.842-7.7a25.238,25.238,0,0,1,17-15.85A27.735,27.735,0,0,1,38.135,147.114Zm89.473,40.736a24.552,24.552,0,0,1,18.683,21.784,27.458,27.458,0,0,1-1.493,10.107,25.227,25.227,0,0,1-16.96,15.391,32.547,32.547,0,0,1-11.868,0,26.153,26.153,0,0,1-14.663-10.643,24.395,24.395,0,0,1,26.3-36.639Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
 
-<p id="nodequeryMain">
-    <select class='fstdropdown-select' id="nodequery" onchange="updateSearch()">
-        <option value="">--</option>
-    </select>
-</p>
-  <button class="button button1" id="screenshotButton" onclick="screenshot()">SnapShot</button>
-
-  <button class="button2 button1" id="resetButton"  onclick="queryReset()">Reset</button>
-  
-<div id="radioButtons">
-  <ul id="filter2" class="filter-switch inline-flex items-center relative h-10 p-1 space-x-1 bg-gray-200 rounded-md font-medium text-black-600 my-4 border border-gray-400">
-    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
-      <input type="radio" name="filter2" id="filter2-0" class="sr-only" onclick="changeState()" value = "HC" checked>
-      <label for="filter2-0" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
-        Healthy Control
-      </label>
-      <div aria-hidden="true" class="filter-active"></div>
-    </li>
-    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
-      <input type="radio" name="filter2" id="filter2-1" onclick="changeState()" value = "CD" class="sr-only">
-      <label for="filter2-1" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
-        Crohn's Disease
-      </label>
-    </li>
-    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
-      <input type="radio" name="filter2" id="filter2-2" onclick="changeState()" value = "UC" class="sr-only">
-      <label for="filter2-2" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
-        Ulcerative Colitis
-      </label>
-    </li>
-  </ul>
-
-  <ul id="filter3" class="filter-switch inline-flex items-center relative h-10 p-1 space-x-1 bg-gray-200 rounded-md font-medium text-black-600 my-4 border border-gray-400">
-    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
-      <input type="radio" name="filter3" id="filter3-0" onclick="changeState()" value = "D" class="sr-only">
-      <label for="filter3-0" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
-        &minus; 6 Years
-      </label>
-      <div aria-hidden="true" class="filter-active"></div>
-    </li>
-    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
-      <input type="radio" name="filter3" id="filter3-1" onclick="changeState()" value = "C" class="sr-only">
-      <label for="filter3-1" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
-        &minus; (2/4) Years
-      </label> 
-    </li>
-    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
-      <input type="radio" name="filter3" id="filter3-2" onclick="changeState()" value = "B" class="sr-only">
-      <label for="filter3-2" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
-      &minus; (1/2) Years
-      </label>
-    </li>
-    <li class="filter-switch-item flex relative h-8 bg-gray-300x">
-      <input type="radio" name="filter3" id="filter3-3" onclick="changeState()" value = "A" class="sr-only" checked>
-      <label for="filter3-3" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
-        Diagnosis
-      </label>
-    </li>
-  </ul>
 </div>
-  <div id="textdiv"> 
-    <p style="font-size:12px"><b>PREDICT-Net: Multi-omics network analyses to identify key drivers of disease initiation and progression in the preclinical phase of inflammatory bowel disease (IBD).</b></p>
-    <p><br></p>
-    <p style="font-size:10px">Funding: Support for this tool has been provided by the Kenneth Rainin Foundation (Grant #20210021)</p>
-    <p><br></p>
-    <p style="font-size:10px"><b>Literature:</b></p>
-    <p>
-      <b>1. </b>Torres, J., Petralia, F., Sato, T., Wang, P., Telesco, S.E., Strauss, R., Li, X.J., Laird, R.M., Gutierrez, R.L., Porter, C.K. and Plevy, S., 2020. Serum biomarkers identify patients who will develop inflammatory bowel diseases up to 5 years before diagnosis. Gastroenterology, 159(1), pp.96-104.<br>
-      <b>2. </b>Porter CK, Riddle MS, Gutierrez RL, et al. Cohort profile of the PRoteomic Evaluation and Discovery in an IBD Cohort of Tri-service Subjects (PREDICTS) study: Rationale, organization, design, and baseline characteristics. Contemporary Clinical Trials Communications 2019; 14: 100345. 
-    </p>
+
+
+<!-- Association button -->
+<div>
+    <button id="ASButton" onclick="window.location.href = ''">
+      <svg xmlns="http://www.w3.org/2000/svg" width="406.392" height="53.81" viewBox="0 0 420 53.81">
+        <g id="Button_CTA" data-name="Button CTA" transform="translate(0)">
+          <g id="Rectangle_1090" data-name="Rectangle 1090" transform="translate(0)">
+            <path d="M5.89,0H400.5c3.253,0,5.89,2.008,5.89,4.484V49.326c0,2.477-2.637,4.484-5.89,4.484H5.89C2.637,53.81,0,51.8,0,49.326V4.484C0,2.008,2.637,0,5.89,0Z" stroke="none"/>
+            <path d="M 5.889739990234375 0.9999961853027344 C 4.534088134765625 0.9999961853027344 3.27020263671875 1.393848419189453 2.330841064453125 2.109046936035156 C 1.47265625 2.762447357177734 1 3.605945587158203 1 4.484195709228516 L 1 49.32629776000977 C 1 50.20454788208008 1.47265625 51.04804611206055 2.330841064453125 51.70144653320312 C 3.27020263671875 52.41664505004883 4.534088134765625 52.81049728393555 5.889739990234375 52.81049728393555 L 400.5020446777344 52.81049728393555 C 401.8576965332031 52.81049728393555 403.12158203125 52.41664505004883 404.0609436035156 51.70144653320312 C 404.9191284179688 51.04804611206055 405.3917846679688 50.20454788208008 405.3917846679688 49.32629776000977 L 405.3917846679688 4.484195709228516 C 405.3917846679688 3.605945587158203 404.9191284179688 2.762447357177734 404.0609436035156 2.109046936035156 C 403.12158203125 1.393848419189453 401.8576965332031 0.9999961853027344 400.5020446777344 0.9999961853027344 L 5.889739990234375 0.9999961853027344 M 5.889739990234375 -3.814697265625e-06 L 400.5020446777344 -3.814697265625e-06 C 403.7548522949219 -3.814697265625e-06 406.3917846679688 2.007648468017578 406.3917846679688 4.484195709228516 L 406.3917846679688 49.32629776000977 C 406.3917846679688 51.8028450012207 403.7548522949219 53.81049728393555 400.5020446777344 53.81049728393555 L 5.889739990234375 53.81049728393555 C 2.636932373046875 53.81049728393555 0 51.8028450012207 0 49.32629776000977 L 0 4.484195709228516 C 0 2.007648468017578 2.636932373046875 -3.814697265625e-06 5.889739990234375 -3.814697265625e-06 Z" stroke="none" fill="rgba(0,0,0,0)"/>
+          </g>
+          <text id="NORMAL" transform="translate(203.196 32.905)" fill="#fff" font-size="20" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-120.767" y="0">ASSOCIATION ANALYSIS</tspan></text>
+        </g>
+      </svg>   
+    </button>   
+    <div>
+    <!-- end of Association button -->
+  
+  <!-- upload for network button -->
+  <div>
+      <button id="NetworkButton" onclick="window.location.href = 'network.html'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="406.392" height="53.81" viewBox="0 0 420 53.81">
+          <g id="Button_CTA" data-name="Button CTA" transform="translate(0)">
+            <path id="Rectangle_1090" data-name="Rectangle 1090" d="M5.89,0H400.5c3.253,0,5.89,2.008,5.89,4.484V49.326c0,2.477-2.637,4.484-5.89,4.484H5.89C2.637,53.81,0,51.8,0,49.326V4.484C0,2.008,2.637,0,5.89,0Z" transform="translate(0)"/>
+            <text id="NORMAL" transform="translate(203.137 32.769)" fill="#fff" font-size="20" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="-103.716" y="0">NETWORK ANALYSIS</tspan></text>
+          </g>
+        </svg>
+      </button>
+    </div>
+  <!-- end of upload for network button -->
+
+  
+  <!-- faq button -->
+  <div id="lowerButtons">
+  
+    <svg id = "faqButton" xmlns="http://www.w3.org/2000/svg" width="2.8%" viewBox="0 0 45 62">
+      <g id="Group_1" data-name="Group 1">
+        <g id="No" transform="translate(0 0)">
+          <g id="Ellipse_111" data-name="Ellipse 111" fill="none" stroke="#000" stroke-width="2">
+            <circle cx="22.5" cy="22.5" r="22.5" stroke="none"/>
+            <circle cx="22.5" cy="22.5" r="21.5" fill="none"/>
+          </g>
+        </g>
+      </g>
+      <g id="Layer_2" data-name="Layer 2" transform="translate(15.576 11.635)">
+        <g id="menu-arrow" transform="translate(0 0)">
+          <path id="Path_1" data-name="Path 1" d="M20.638,10.819A6.819,6.819,0,1,0,7,10.819a1.364,1.364,0,0,0,2.728,0,4.091,4.091,0,1,1,4.091,4.091,1.364,1.364,0,0,0-1.364,1.364V19a1.364,1.364,0,0,0,2.728,0V17.5A6.819,6.819,0,0,0,20.638,10.819Z" transform="translate(-7 -4)" stroke="#000" stroke-width="1"/>
+          <circle id="Ellipse_7" data-name="Ellipse 7" cx="1.5" cy="1.5" r="1.5" transform="translate(5.424 19.365)" stroke="#000" stroke-width="1"/>
+        </g>
+      </g>
+      <text id="FAQ" transform="translate(10 59)" font-size="12" font-family="Helvetica"><tspan x="0" y="0">FAQ</tspan></text>
+    </svg>
     
-  </div>
-
-  <div id="3d-graph"></div>
-
-<script>
-
-function hideShow(val){
-  if(val==0){
-    document.getElementById("nqText").style.display = "none";
-    document.getElementById("nodequeryMain").style.display = "none";
-    document.getElementById("screenshotButton").style.display = "none";
-    document.getElementById("resetButton").style.display = "none";
-    document.getElementById("radioButtons").style.display = "none";
-    document.getElementById("hideShow").innerHTML =  "<u>show controls</u>";
-    document.getElementById("hideShow").value = 1;
-
-  }
-  else{
-    document.getElementById("nqText").style.display = "block";
-    document.getElementById("nodequeryMain").style.display = "block";
-    document.getElementById("screenshotButton").style.display = "inline-block";
-    document.getElementById("resetButton").style.display = "inline-block";
-    document.getElementById("radioButtons").style.display = "block";
-    document.getElementById("hideShow").innerHTML =  "<u>hide controls</u>";
-    document.getElementById("hideShow").value = 0;
-  }
-}
-
-function hideInfo(val){
-  if(val==0){
-    document.getElementById("textdiv").style.display = "none";
-    document.getElementById("hideInfo").innerHTML =  "<u><b>show info</b></u>";
-    document.getElementById("hideInfo").value = 1;
-  }
-  else{
-    document.getElementById("textdiv").style.display = "inline-block";
-    document.getElementById("hideInfo").innerHTML =  "<u><b>hide info</b></u>";
-    document.getElementById("hideInfo").value = 0;
-  }
-}
-
-function openNav() {
-  document.getElementById("myNav").style.width = "100%";
-}
-
-function closeNav() {
-  document.getElementById("myNav").style.width = "0%";
-}
-//////////////// DATA CREATION ////////////////
-
-    /// QUERY BOX FUNCTIONS ///
-  function removeOptions(selectElement) {
-   var i, L = selectElement.options.length - 1;
-   for(i = L; i >= 0; i--) {
-      selectElement.remove(i);
-   }
-   selectElement.fstdropdown.rebind()
-}
-
-function addOptions(addText, selectElement)
-    {
-        // Create an Option object       
-        var opt = document.createElement("option");        
-
-        // Assign text and value to Option object
-        opt.text = addText;
-        opt.value = addText;
-
-        // Add an Option object to Drop Down List Box
-        selectElement.options.add(opt);
-    }
-
-    //////////////// JSON FILE ////////////////
-    var finalDataObj = Network_HC_time_A_TH_network
-    var nodesList = Network_HC_time_A_TH_nodes
-    //////////////// GRAPH CREATION ////////////////
-     var elem = document.getElementById('3d-graph');
-     var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer   : true}})
-        .backgroundColor("#ffffff")
-      (elem)
-        .graphData(finalDataObj)
-        .nodeThreeObject(node => CreateSource(node))   // KINASES
-        .onNodeDragEnd(node => {
-          node.fx = node.x;
-          node.fy = node.y;
-          node.fz = node.z; })
-        .linkWidth(0.5)
-        .linkColor(link => (link.edge_attr_1 == null)
-          ? "#808080"
-          : "#808080")
-        
-        .linkOpacity(0.4)
-        .onNodeClick(node => {
-          // Aim at node from outside it
-          const distance = 40;
-          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-          Graph.cameraPosition(
-            { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-            node, // lookAt ({ x, y, z })
-            3000  // ms transition duration
-          );
-        });
-
-        nodesList = nodesList.sort()
-        var x = document.getElementById("nodequery");
-        var nodeindexes = 0
-        for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
-          var optext = nodesList[nodeindexes]
-          addOptions(optext,x)
-        }
-        
-        //////////////// XXXXXX ////////////////
-          
-        function CreateSource(node)
-        {
-          var node_size
-          if (node["colorCode"] == 0){ // SourceNodeSize
-            node_size = .7
-          }
-          else{
-            node_size = 1.2
-          }
-          var mesh = (new THREE.Mesh(    
-          new THREE.SphereGeometry(node_size*8,25,25),
-          new THREE.MeshLambertMaterial({
-            transparent: false,
-            depthWrite: false,
-            opacity: 1 //changed 0.8 to 1 
-          })
-        ))
-
-        const sprite = new SpriteText(node.id);
-        sprite.color = 'rgb(0,0,0)';
-        sprite.textHeight = 5;
-        //sprite.position.y = 15;
-        mesh.add(sprite);
-        
-        var node_color
-          if (node['colorCode'] == 0){ // SourceNodeColor
-            node_color = "0xffa500"
-          }
-          else if (node['colorCode'] == 1){
-            node_color = "0x6e9af8"
-          }
-          
-        mesh.material.color.setHex(node_color);
-        return mesh
-        }
-
-
-        function colors_general (l2fc_value, isHexFlag, color1, color2, color3, color4, color5) {
-            var rainbow = new Rainbow(); 
-            thisColor1 = String(color1)
-            thisColor2 = String(color2)
-            thisColor3 = String(color3)
-            thisColor4 = String(color4)
-            thisColor5 = String(color5)
-            rainbow.setNumberRange(0, 1);
-            rainbow.setSpectrum(thisColor1, thisColor2, thisColor3, thisColor4, thisColor5)
-            var hexColour = rainbow.colourAt(l2fc_value);
-            var stringColor = '0x' + hexColour
-            if (isHexFlag){
-              var modcolor =  parseInt(hexColour, 16 )
-              return modcolor
-            }
-            else 
-              return stringColor
-          
-        }
-
-        function screenshot(){
-        var ImageBase64 = Graph.renderer().domElement.toDataURL("image/png");
-        var a = document.createElement("a"); //Create <a>
-        a.href = ImageBase64; //Image Base64 Goes here
-        a.download = "image.png"; //File name Here
-        a.click(); //Downloaded file
-        }
-
-    const CAMERA_DISTANCE2NODES_FACTOR = 170;
-
-
-//////////////////////////////////////////////
-    function updateSearch() {
-      var x = document.getElementById("nodequery");
-      if(x.value == ""){
-        var nodenum = Graph.graphData().nodes.length
-        Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
-      }
-
-      Graph.nodeThreeObjectExtend(node => {
-        var selectedNode = x.value //change
-        if (selectedNode == node.id) {
-              {   const distance = 100;
-                  const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-                  Graph.cameraPosition(
-                      { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-                      node, // lookAt ({ x, y, z })
-                      3000  // ms transition duration
-                      );
-              }
-          }
-      })
-      }
-
-
-
-
-
-    function changeState(){
+      
+  <!-- end of faq button -->
+  <!-- tutorial button -->
+    <svg id="tutorialButton" xmlns="http://www.w3.org/2000/svg" width="3.75%" viewBox="0 0 60 62">
+      <g id="Group_2" data-name="Group 2" transform="translate(7.048)">
+        <g id="No" transform="translate(0 0)">
+          <g id="Ellipse_111" data-name="Ellipse 111" transform="translate(-0.048)" fill="none" stroke="#000" stroke-width="2">
+            <circle cx="22.5" cy="22.5" r="22.5" stroke="none"/>
+            <circle cx="22.5" cy="22.5" r="21.5" fill="none"/>
+          </g>
+        </g>
+      </g>
+      <g id="Polygon_1" data-name="Polygon 1" transform="translate(46 10) rotate(90)" fill="#fff">
+        <path d="M 18.63865089416504 24.5000057220459 L 6.361340045928955 24.5000057220459 C 5.483590126037598 24.5000057220459 4.712210178375244 24.0738353729248 4.244969844818115 23.33078575134277 C 3.777729988098145 22.58771514892578 3.727890014648438 21.70784568786621 4.10821008682251 20.9167652130127 L 10.24687004089355 8.148355484008789 C 10.67337036132812 7.26122522354126 11.51566982269287 6.731595039367676 12.5 6.731595039367676 C 13.48433971405029 6.731595039367676 14.32662963867188 7.26122522354126 14.75312995910645 8.148355484008789 L 20.89178085327148 20.9167652130127 C 21.27210998535156 21.70784568786621 21.22225952148438 22.58771514892578 20.75502967834473 23.33077430725098 C 20.28779029846191 24.0738353729248 19.51639938354492 24.5000057220459 18.63865089416504 24.5000057220459 Z" stroke="none"/>
+        <path d="M 12.5 8.231595993041992 C 12.26515960693359 8.231595993041992 11.83580017089844 8.305215835571289 11.59875011444092 8.798295974731445 L 5.460090637207031 21.56670379638672 C 5.251810073852539 21.99992561340332 5.404960632324219 22.35763549804688 5.514789581298828 22.53230476379395 C 5.62462043762207 22.70697402954102 5.880649566650391 22.99999618530273 6.361339569091797 22.99999618530273 L 18.63864898681641 22.99999618530273 C 19.11935043334961 22.99999618530273 19.37537002563477 22.70697402954102 19.48521041870117 22.53230476379395 C 19.59502983093262 22.35764503479004 19.74818992614746 21.99993515014648 19.5398998260498 21.56670379638672 L 13.40124988555908 8.798305511474609 C 13.1641902923584 8.305215835571289 12.73484039306641 8.231595993041992 12.5 8.231595993041992 M 12.5 5.231592178344727 C 13.93923282623291 5.231592178344727 15.3784646987915 5.987199783325195 16.10501098632812 7.498414993286133 L 22.24365997314453 20.26682472229004 C 23.52035903930664 22.92235565185547 21.58514976501465 25.99999618530273 18.63864898681641 25.99999618530273 L 6.361339569091797 25.99999618530273 C 3.414850234985352 25.99999618530273 1.479639053344727 22.92235565185547 2.756330490112305 20.26682472229004 L 8.894990921020508 7.498414993286133 C 9.621535301208496 5.987199783325195 11.06076717376709 5.231592178344727 12.5 5.231592178344727 Z" stroke="none" fill="#000"/>
+      </g>
+      <text id="TUTORIAL" transform="translate(0 59)" font-size="12" font-family="Helvetica"><tspan x="0" y="0">TUTORIAL</tspan></text>
+    </svg>
+  <!-- end of tutorial button -->
+  
+  <!-- contact us button -->
+    <svg id = "contactButton" xmlns="http://www.w3.org/2000/svg"  width="4.8%" viewBox="0 0 77 62">
+      <g id="Group_3" data-name="Group 3" transform="translate(15.096)">
+        <g id="No" transform="translate(0 0)">
+          <g id="Ellipse_111" data-name="Ellipse 111" transform="translate(-0.096)" fill="none" stroke="#000" stroke-width="2">
+            <circle cx="22.5" cy="22.5" r="22.5" stroke="none"/>
+            <circle cx="22.5" cy="22.5" r="21.5" fill="none"/>
+          </g>
+        </g>
+      </g>
+      <g id="envelope-svgrepo-com" transform="translate(26.555 15.076)">
+        <path id="Path_2" data-name="Path 2" d="M22.068,156a.35.35,0,0,0-.35.35v9.458a1.753,1.753,0,0,1-1.751,1.751H2.452A1.753,1.753,0,0,1,.7,165.808V156.35a.35.35,0,0,0-.7,0v9.458a2.455,2.455,0,0,0,2.452,2.452H19.967a2.455,2.455,0,0,0,2.452-2.452V156.35A.35.35,0,0,0,22.068,156Z" transform="translate(0 -152.497)" stroke="#000" stroke-width="1.5"/>
+        <path id="Path_3" data-name="Path 3" d="M.512,78.856h0l9.549,6.161a2.457,2.457,0,0,0,2.659,0l9.549-6.161a.685.685,0,0,0,.319-.64A2.459,2.459,0,0,0,20.148,76H2.634A2.459,2.459,0,0,0,.193,78.216.685.685,0,0,0,.512,78.856ZM2.634,76.7H20.148a1.767,1.767,0,0,1,1.742,1.567h0l-9.549,6.161a1.755,1.755,0,0,1-1.9,0L.892,78.268h0A1.767,1.767,0,0,1,2.634,76.7Z" transform="translate(-0.182 -76)" stroke="#000" stroke-width="1.5"/>
+      </g>
+      <text id="CONTACT_US" data-name="CONTACT US" transform="translate(0 59)" font-size="12" font-family="Helvetica"><tspan x="0" y="0">CONTACT US</tspan></text>
+    </svg>
     
-    var disease = document.querySelector('input[name="filter2"]:checked').value;
-   
-    var tp = document.querySelector('input[name="filter3"]:checked').value;
-    
-
-    if(disease == "CD" && tp == "A"){
-      finalDataObj = Network_CD_time_A_TH_network
-      nodesList = Network_CD_time_A_TH_nodes
-    }
-    else if (disease == "CD" && tp == "B"){
-      finalDataObj = Network_CD_time_B_TH_network
-      nodesList = Network_CD_time_B_TH_nodes
-    }
-    else if (disease == "CD" && tp == "C"){
-      finalDataObj = Network_CD_time_C_TH_network
-      nodesList = Network_CD_time_C_TH_nodes
-    }
-    else if (disease == "CD" && tp == "D"){
-      finalDataObj = Network_CD_time_D_TH_network
-      nodesList = Network_CD_time_D_TH_nodes
-    }
-    else if (disease == "HC" && tp == "A"){
-      finalDataObj = Network_HC_time_A_TH_network
-      nodesList = Network_HC_time_A_TH_nodes
-    }
-    else if (disease == "HC" && tp == "B"){
-      finalDataObj = Network_HC_time_B_TH_network
-      nodesList = Network_HC_time_B_TH_nodes
-    }
-    else if (disease == "HC" && tp == "C"){
-      finalDataObj = Network_HC_time_C_TH_network
-      nodesList = Network_HC_time_C_TH_nodes
-    }
-    else if (disease == "HC" && tp == "D"){
-      finalDataObj = Network_HC_time_D_TH_network
-      nodesList = Network_HC_time_D_TH_nodes
-    }
-    else if (disease == "UC" && tp == "A"){
-      finalDataObj = Network_UC_time_A_TH_network
-      nodesList = Network_UC_time_A_TH_nodes
-    }
-    else if (disease == "UC" && tp == "B"){
-      finalDataObj = Network_UC_time_B_TH_network
-      nodesList = Network_UC_time_B_TH_nodes
-    }
-    else if (disease == "UC" && tp == "C"){
-      finalDataObj = Network_UC_time_C_TH_network
-      nodesList = Network_UC_time_C_TH_nodes
-    }
-    else if (disease == "UC" && tp == "D"){
-      finalDataObj = Network_UC_time_D_TH_network
-      nodesList = Network_UC_time_D_TH_nodes
-    }
-    console.log(nodesList)
-    /////////////// JSON FILE ////////////////
-       Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer: true}})
-       .backgroundColor("#ffffff")
-      (elem)
-        .graphData(finalDataObj)
-        .nodeThreeObject(node => CreateSource(node))   // KINASES
-        .onNodeDragEnd(node => {
-          node.fx = node.x;
-          node.fy = node.y;
-          node.fz = node.z; })
-        .linkWidth(0.5)
-        .linkColor(link => (link.edge_attr_1 == null)
-          ? "#808080"
-          : "#808080")
-        
-        .linkOpacity(0.4)
-        .onNodeClick(node => {
-          // Aim at node from outside it
-          const distance = 40;
-          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-          Graph.cameraPosition(
-            { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-            node, // lookAt ({ x, y, z })
-            3000  // ms transition duration
-          );
-        });
-
-        var x = document.getElementById("nodequery");
-        removeOptions(x)
-
-        var option = document.createElement("option");
-        option.text = "--";
-        option.value = ""
-        x.add(option);
-        nodesList = nodesList.sort()
-        var nodeindexes = 0
-        for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
-          var optext = nodesList[nodeindexes]
-          addOptions(optext,x)
-          x.fstdropdown.rebind()
-        }
-        //////////////////////////////////////////////////////////////////////////
-    }
-
-
-    function queryReset(){
-      document.getElementById("nodequery").selectedIndex = 0;
-      document.getElementById("nodequery").fstdropdown.rebind()
-      var nodenum = Graph.graphData().nodes.length
-      Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
-
-    }
-
-  </script>
+  
+  <!-- end of contact us button -->
+    </div>
+  
+  
+  
+  <!-- MS logo -->
+      <div id = "footer" style="font-family: Helvetica, Arial;vertical-align:bottom;">
+        <img src="./img/MS_logo.png" alt="MountSinai Logo" class="MountSinailogo">   
+        <span style="font-size:0.9vw; margin-left: 10px; vertical-align:bottom;color:#000000"> © Gümüş Lab 
+            <a href="https://gumuslab.github.io" target="_blank" style="margin-left: 10px; vertical-align:bottom;color:#000000"> https://gumuslab.github.io</a> 
+        </span>
+      </div>
+  <!-- end of MS logo --> 
+  
+<div id="licenseDiv" style="font-family: Helvetica;">
+  <a rel="license" style="font-size:0.9vw;color:#000000;">
+  <img alt="Creative Commons License" style="border-width:0; margin-bottom: -2.5px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" />
+  This work is licensed under <a rel="license" style="font-size:0.9vw;color:#000000; margin-right: 15px;" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC-BY-NC-SA-4.0</a>
+</div>
 </body>
