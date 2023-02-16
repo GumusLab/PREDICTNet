@@ -21573,9 +21573,3 @@ var data = [{
       stickyHeaderOffsetLeft: parseInt($('body').css('padding-left'), -100),
       stickyHeaderOffsetRight: parseInt($('body').css('padding-right'), -100)
     })
-
-    // setTimeout(function () {
-    //     var screen_height = window.screen.availHeight * 0.77; 
-    // //$('#table').bootstrapTable('resetView' , {height: screen_height} );
-    // //    alert("zattiri")
-    // }, 100);
