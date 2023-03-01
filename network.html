@@ -229,19 +229,6 @@ body {
     </li>
   </ul>
 </div>
-<!-- 
-  <div id="textdiv"> 
-    <p style="font-size:12px"><b>PREDICT-Net: Multi-omics network analyses to identify key drivers of disease initiation and progression in the preclinical phase of inflammatory bowel disease (IBD).</b></p>
-    <p><br></p>
-    <p style="font-size:10px">Funding: Support for this tool has been provided by the Kenneth Rainin Foundation (Grant #20210021)</p>
-    <p><br></p>
-    <p style="font-size:10px"><b>Literature:</b></p>
-    <p>
-      <b>1. </b>Torres, J., Petralia, F., Sato, T., Wang, P., Telesco, S.E., Strauss, R., Li, X.J., Laird, R.M., Gutierrez, R.L., Porter, C.K. and Plevy, S., 2020. Serum biomarkers identify patients who will develop inflammatory bowel diseases up to 5 years before diagnosis. Gastroenterology, 159(1), pp.96-104.<br>
-      <b>2. </b>Porter CK, Riddle MS, Gutierrez RL, et al. Cohort profile of the PRoteomic Evaluation and Discovery in an IBD Cohort of Tri-service Subjects (PREDICTS) study: Rationale, organization, design, and baseline characteristics. Contemporary Clinical Trials Communications 2019; 14: 100345. 
-    </p>
-    
-  </div> -->
 
   <div id="3d-graph"></div>
 
@@ -322,16 +309,13 @@ function addOptions(addText, selectElement)
         .backgroundColor("#ffffff")
       (elem)
         .graphData(finalDataObj)
-        .nodeThreeObject(node => CreateSource(node))   // KINASES
+        .nodeThreeObject(node => CreateSource(node))
         .onNodeDragEnd(node => {
           node.fx = node.x;
           node.fy = node.y;
           node.fz = node.z; })
         .linkWidth(0.3)
-        .linkColor(link => (link.edge_attr_1 == null)
-          ? "#adadad"
-          : "#adadad")
-        
+        .linkColor(link => ("#adadad"))
         .linkOpacity(0.4)
         .onNodeClick(node => {
           // Aim at node from outside it
@@ -356,59 +340,26 @@ function addOptions(addText, selectElement)
           
         function CreateSource(node)
         {
-          var node_size
-          if (node["colorCode"] == 0){ // SourceNodeSize
-            node_size = .7
-          }
-          else{
-            node_size = 1.2
-          }
+          var node_size = .7
           var mesh = (new THREE.Mesh(    
           new THREE.SphereGeometry(node_size*8,25,25),
-          new THREE.MeshLambertMaterial({
-            transparent: false,
-            depthWrite: false,
-            opacity: 1 //changed 0.8 to 1 
-          })
+          new THREE.MeshBasicMaterial( { 
+            color: 0xffff00 ,
+            depthWrite: false
+          } )
+          // new THREE.MeshLambertMaterial({
+          //   transparent: false,
+          //   depthWrite: false,
+          //   opacity: 1 //changed 0.8 to 1 
+          // })
         ))
 
         const sprite = new SpriteText(node.id);
         sprite.color = 'rgb(0,0,0)';
         sprite.textHeight = 5;
-        //sprite.position.y = 15;
         mesh.add(sprite);
-        
-        var node_color
-          if (node['colorCode'] == 0){ // SourceNodeColor
-            node_color = "0xbdd5ff"
-          }
-          else if (node['colorCode'] == 1){
-            node_color = "0xbdd5ff"
-          }
-          
-        mesh.material.color.setHex(node_color);
+        mesh.material.color.setHex("0xbdd5ff");
         return mesh
-        }
-
-
-        function colors_general (l2fc_value, isHexFlag, color1, color2, color3, color4, color5) {
-            var rainbow = new Rainbow(); 
-            thisColor1 = String(color1)
-            thisColor2 = String(color2)
-            thisColor3 = String(color3)
-            thisColor4 = String(color4)
-            thisColor5 = String(color5)
-            rainbow.setNumberRange(0, 1);
-            rainbow.setSpectrum(thisColor1, thisColor2, thisColor3, thisColor4, thisColor5)
-            var hexColour = rainbow.colourAt(l2fc_value);
-            var stringColor = '0x' + hexColour
-            if (isHexFlag){
-              var modcolor =  parseInt(hexColour, 16 )
-              return modcolor
-            }
-            else 
-              return stringColor
-          
         }
 
         function screenshot(){
@@ -505,21 +456,18 @@ function addOptions(addText, selectElement)
       nodesList = Network_UC_time_D_TH_nodes
     }
     console.log(nodesList)
-    /////////////// JSON FILE ////////////////
+    /////////////// JSON FILE ////////////////        
        Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer: true}})
        .backgroundColor("#ffffff")
       (elem)
         .graphData(finalDataObj)
-        .nodeThreeObject(node => CreateSource(node))   // KINASES
+        .nodeThreeObject(node => CreateSource(node))  
         .onNodeDragEnd(node => {
           node.fx = node.x;
           node.fy = node.y;
           node.fz = node.z; })
         .linkWidth(0.5)
-        .linkColor(link => (link.edge_attr_1 == null)
-          ? "#808080"
-          : "#808080")
-        
+        .linkColor(link => ("#adadad"))
         .linkOpacity(0.4)
         .onNodeClick(node => {
           // Aim at node from outside it
