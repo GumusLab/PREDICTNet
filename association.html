@@ -83,7 +83,7 @@
               <path id="path9255" d="M-5.046,137.558a2.194,2.194,0,0,1,1.059.276,2,2,0,0,1,.8.791A2.17,2.17,0,0,1-2.9,139.7a2.158,2.158,0,0,1-.284,1.069,2.011,2.011,0,0,1-.792.792,2.162,2.162,0,0,1-1.069.284,2.162,2.162,0,0,1-1.069-.284,2.011,2.011,0,0,1-.792-.792,2.157,2.157,0,0,1-.284-1.069,2.171,2.171,0,0,1,.289-1.079,2,2,0,0,1,.8-.791,2.194,2.194,0,0,1,1.059-.276m0,.42a1.752,1.752,0,0,0-.848.221,1.6,1.6,0,0,0-.64.635,1.737,1.737,0,0,0-.234.868,1.74,1.74,0,0,0,.228.86,1.621,1.621,0,0,0,.638.639,1.72,1.72,0,0,0,.856.23,1.723,1.723,0,0,0,.859-.23,1.644,1.644,0,0,0,.638-.639,1.728,1.728,0,0,0,.23-.86,1.749,1.749,0,0,0-.234-.868,1.6,1.6,0,0,0-.641-.635,1.765,1.765,0,0,0-.85-.221m-.972,2.874v-2.277h.463q.649,0,.728.007a.894.894,0,0,1,.357.091.572.572,0,0,1,.213.217.641.641,0,0,1,.086.327.6.6,0,0,1-.162.422.73.73,0,0,1-.452.217.531.531,0,0,1,.159.085,1.183,1.183,0,0,1,.154.175c.017.024.073.115.168.277l.27.46H-4.6l-.191-.37a1.55,1.55,0,0,0-.318-.469.512.512,0,0,0-.319-.1h-.12v.935Zm.463-1.295h.187a2.263,2.263,0,0,0,.5-.031.291.291,0,0,0,.153-.108.286.286,0,0,0,.056-.175.275.275,0,0,0-.055-.169.3.3,0,0,0-.155-.107,2.2,2.2,0,0,0-.5-.034h-.187Z" transform="translate(45.984 -136.955)" fill="#7b7979"/>
             </g>
           </g>
-          <text id="Association_Analysis" data-name="Association Analysis" transform="translate(470.713 45)" fill="#3373ca" font-size="22" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">Association Analysis</tspan></text>
+          <text id="Association_Analysis_Results" data-name="Association Analysis Results" transform="translate(427.713 45)" fill="#3373ca" font-size="22" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">Association Analysis Results</tspan></text>
           <line id="Line_11" data-name="Line 11" x2="1297" transform="translate(-67.787 80.461)" fill="none" stroke="#3373ca" stroke-width="2"/>
         </g>
         <g style = "cursor: pointer;" onclick="window.location.href = 'index.html'" id="Group_236" data-name="Group 236" transform="translate(-248 -0.319)">
@@ -122,10 +122,10 @@
         </g>
       </g>
     </svg>
-       
+         
        
   <div class="container">
-    <p style="margin-bottom: 20px;">This filterable association analysis table displays key markers and their corresponding <b>odds ratios (OR)</b> and <b>p-values (p-val)</b> for <b>Ulcerative Colitis (UC) and Crohn's Disease (CD)</b> at 4 different time points (A, B, C, D) in the preclinical phase of <b>inflammatory bowel disease (IBD)</b>. Entires can be filtered by selecting serologic or somalogic datasets and entering multiple marker names separated by commas.</p>
+    <p style="margin-bottom: 20px;">This filterable association analysis table displays key markers and their corresponding <b>odds ratios (OR)</b>, <b>p-values (p-val)</b> and <b>fdr (false discovery rate)</b> for <b>Ulcerative Colitis (UC) and Crohn's Disease (CD)</b> at 4 different time points <b>(-6 years, -2/4 years, -1/2 years, Diagnosis)</b> in the preclinical phase of <b>inflammatory bowel disease (IBD)</b>. Entires can be filtered by selecting serologic or somalogic datasets and entering multiple marker names separated by commas.</p>
   </div>
     <div class = "table-responsive">
     <table class="table-striped table-condensed"
@@ -138,10 +138,12 @@
         <tr class="custom-time">
             <th data-field="type" data-filter-control="select" rowspan="3" data-valign="bottom" class="text-center">(Select)<br>Data Type</th>
             <th data-field="marker" data-filter-control="input" rowspan="3" data-valign="bottom" class="text-center">(Query)<br>Marker Names</th>
-            <th colspan="6">Diagnosis</th>
-            <th colspan="6">-1/2 years</th>
-            <th colspan="6">-2/4 years</th>
+            
             <th colspan="6">-6 years</th>
+            <th colspan="6">-2/4 years</th>
+            <th colspan="6">-1/2 years</th>
+            <th colspan="6">Diagnosis</th>
+            
           </tr>
         <tr class="custom-ucd">
             <th colspan="3">CD</th>
@@ -154,33 +156,38 @@
             <th colspan="3">UC</th>
         </tr>
         <tr class="custom-pval" class="text-center">
-            <th data-field="odd_A_cd">OR</th>
-            <th data-field="pval_A_cd" class="text-center">p-val</th>
-            <th data-field="fdr_A_cd" class="text-center">fdr</th>
-            <th data-field="odd_A_uc" class="text-center">OR</th>
-            <th data-field="pval_A_uc" class="text-center">p-val</th>
-            <th data-field="fdr_A_uc" class="text-center">fdr</th>
+          <th data-field="odd_D_cd" class="text-center">OR</th>
+          <th data-field="pval_D_cd" class="text-center">p-val</th>
+          <th data-field="fdr_D_cd" class="text-center">fdr</th>
+          <th data-field="odd_D_uc" class="text-center">OR</th>
+          <th data-field="pval_D_uc" class="text-center">p-val</th>
+          <th data-field="fdr_D_uc" class="text-center">fdr</th>
 
-            <th data-field="odd_B_cd" class="text-center">OR</th>
-            <th data-field="pval_B_cd" class="text-center">p-val</th>
-            <th data-field="fdr_B_cd" class="text-center">fdr</th>
-            <th data-field="odd_B_uc" class="text-center">OR</th>
-            <th data-field="pval_B_uc" class="text-center">p-val</th>
-            <th data-field="fdr_B_uc" class="text-center">fdr</th>
 
-            <th data-field="odd_C_cd" class="text-center">OR</th>
-            <th data-field="pval_C_cd" class="text-center">p-val</th>
-            <th data-field="fdr_C_cd" class="text-center">fdr</th>
-            <th data-field="odd_C_uc" class="text-center">OR</th>
-            <th data-field="pval_C_uc" class="text-center">p-val</th>
-            <th data-field="fdr_C_uc" class="text-center">fdr</th>
+          <th data-field="odd_C_cd" class="text-center">OR</th>
+          <th data-field="pval_C_cd" class="text-center">p-val</th>
+          <th data-field="fdr_C_cd" class="text-center">fdr</th>
+          <th data-field="odd_C_uc" class="text-center">OR</th>
+          <th data-field="pval_C_uc" class="text-center">p-val</th>
+          <th data-field="fdr_C_uc" class="text-center">fdr</th>
 
-            <th data-field="odd_D_cd" class="text-center">OR</th>
-            <th data-field="pval_D_cd" class="text-center">p-val</th>
-            <th data-field="fdr_D_cd" class="text-center">fdr</th>
-            <th data-field="odd_D_uc" class="text-center">OR</th>
-            <th data-field="pval_D_uc" class="text-center">p-val</th>
-            <th data-field="fdr_D_uc" class="text-center">fdr</th>
+          <th data-field="odd_B_cd" class="text-center">OR</th>
+          <th data-field="pval_B_cd" class="text-center">p-val</th>
+          <th data-field="fdr_B_cd" class="text-center">fdr</th>
+          <th data-field="odd_B_uc" class="text-center">OR</th>
+          <th data-field="pval_B_uc" class="text-center">p-val</th>
+          <th data-field="fdr_B_uc" class="text-center">fdr</th>
+
+          <th data-field="odd_A_cd">OR</th>
+          <th data-field="pval_A_cd" class="text-center">p-val</th>
+          <th data-field="fdr_A_cd" class="text-center">fdr</th>
+          <th data-field="odd_A_uc" class="text-center">OR</th>
+          <th data-field="pval_A_uc" class="text-center">p-val</th>
+          <th data-field="fdr_A_uc" class="text-center">fdr</th>
+
+
+
+
         </tr>
       </thead>
     </table>
