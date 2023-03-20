@@ -8,10 +8,10 @@
   <script src="libraries/index.min.js"></script>
   <script src="libraries/three.js"></script>
   <script src="libraries/three-spritetext.min.js"></script>
-  <script src="libraries/dat.gui.js"></script>
+  <!-- <script src="libraries/dat.gui.js"></script> -->
   <script src="libraries/d3.v3.min.js" charset="utf-8"></script>
   <script src="libraries/rainbowvis.js"></script>
-  <script src="https://github.com/mrdoob/three.js/blob/dev/examples/jsm/deprecated/Geometry.js"></script>
+  <!-- <script src="https://github.com/mrdoob/three.js/blob/dev/examples/jsm/deprecated/Geometry.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="js/fstdropdown.js"></script>
   <script src="js/networks.js"></script>
@@ -126,7 +126,7 @@ body {
 <body>
 
 
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style = "cursor: pointer;" onclick="window.location.href = 'index.html'" id="logo" width="14%" viewBox="0 0 697 344.757">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style = "cursor: pointer;" onclick="window.location.href = 'index.html'" id="logo" width="220px" viewBox="0 0 697 344.757">
     <g id="Group_236" data-name="Group 236" transform="translate(-251 13.502)">
       <g id="Group_232" data-name="Group 232" transform="translate(-135.836 -19)">
         <g id="layer1" transform="matrix(0.723, -0.691, 0.691, 0.723, 386.836, 173.931)">
@@ -181,7 +181,7 @@ body {
 <div id="radioButtons">
   <ul id="filter2" class="filter-switch inline-flex items-center relative h-10 p-1 space-x-1 bg-gray-200 rounded-md font-medium text-black-600 my-4 border border-gray-400">
     <li class="filter-switch-item flex relative h-8 bg-gray-300x">
-      <input type="radio" name="filter2" id="filter2-0" class="sr-only" onclick="changeState()" value = "HC" checked>
+      <input type="radio" name="filter2" id="filter2-0" class="sr-only" onclick="changeState()" value = "HC">
       <label for="filter2-0" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
         Healthy Control
       </label>
@@ -222,7 +222,7 @@ body {
       </label>
     </li>
     <li class="filter-switch-item flex relative h-8 bg-gray-300x">
-      <input type="radio" name="filter3" id="filter3-3" onclick="changeState()" value = "A" class="sr-only" checked>
+      <input type="radio" name="filter3" id="filter3-3" onclick="changeState()" value = "A" class="sr-only">
       <label for="filter3-3" class="h-8 py-1 px-2 text-xs leading-6 text-gray-600 hover:text-gray-800 bg-white rounded shadow">
         Diagnosis
       </label>
@@ -301,8 +301,86 @@ function addOptions(addText, selectElement)
     }
 
     //////////////// JSON FILE ////////////////
-    var finalDataObj = Network_HC_time_A_TH_network
-    var nodesList = Network_HC_time_A_TH_nodes
+    var disease = localStorage.getItem('predict_disease') == undefined ? "HC" : localStorage.getItem('predict_disease')
+    var tp = localStorage.getItem('predict_timepoint') == undefined ? "A" : localStorage.getItem('predict_timepoint')
+    
+    // document.getElementById("Apple").checked = true;
+    console.log(disease,"------",tp)
+    var finalDataObj = ""
+    var nodesList = ""
+
+    if(disease == "CD" && tp == "A"){
+      document.getElementById("filter2-1").checked = true;
+      document.getElementById("filter3-3").checked = true;
+      finalDataObj = Network_CD_time_A_TH_network
+      nodesList = Network_CD_time_A_TH_nodes
+    }
+    else if (disease == "CD" && tp == "B"){
+      document.getElementById("filter2-1").checked = true;
+      document.getElementById("filter3-2").checked = true;
+      finalDataObj = Network_CD_time_B_TH_network
+      nodesList = Network_CD_time_B_TH_nodes
+    }
+    else if (disease == "CD" && tp == "C"){
+      document.getElementById("filter2-1").checked = true;
+      document.getElementById("filter3-1").checked = true;
+      finalDataObj = Network_CD_time_C_TH_network
+      nodesList = Network_CD_time_C_TH_nodes
+    }
+    else if (disease == "CD" && tp == "D"){
+      document.getElementById("filter2-1").checked = true;
+      document.getElementById("filter3-0").checked = true;
+      finalDataObj = Network_CD_time_D_TH_network
+      nodesList = Network_CD_time_D_TH_nodes
+    }
+    else if (disease == "HC" && tp == "A"){
+      document.getElementById("filter2-0").checked = true;
+      document.getElementById("filter3-3").checked = true;
+      finalDataObj = Network_HC_time_A_TH_network
+      nodesList = Network_HC_time_A_TH_nodes
+    }
+    else if (disease == "HC" && tp == "B"){
+      document.getElementById("filter2-0").checked = true;
+      document.getElementById("filter3-2").checked = true;
+      finalDataObj = Network_HC_time_B_TH_network
+      nodesList = Network_HC_time_B_TH_nodes
+    }
+    else if (disease == "HC" && tp == "C"){
+      document.getElementById("filter2-0").checked = true;
+      document.getElementById("filter3-1").checked = true;
+      finalDataObj = Network_HC_time_C_TH_network
+      nodesList = Network_HC_time_C_TH_nodes
+    }
+    else if (disease == "HC" && tp == "D"){
+      document.getElementById("filter2-0").checked = true;
+      document.getElementById("filter3-0").checked = true;
+      finalDataObj = Network_HC_time_D_TH_network
+      nodesList = Network_HC_time_D_TH_nodes
+    }
+    else if (disease == "UC" && tp == "A"){
+      document.getElementById("filter2-2").checked = true;
+      document.getElementById("filter3-3").checked = true;
+      finalDataObj = Network_UC_time_A_TH_network
+      nodesList = Network_UC_time_A_TH_nodes
+    }
+    else if (disease == "UC" && tp == "B"){
+      document.getElementById("filter2-2").checked = true;
+      document.getElementById("filter3-2").checked = true;
+      finalDataObj = Network_UC_time_B_TH_network
+      nodesList = Network_UC_time_B_TH_nodes
+    }
+    else if (disease == "UC" && tp == "C"){
+      document.getElementById("filter2-2").checked = true;
+      document.getElementById("filter3-1").checked = true;
+      finalDataObj = Network_UC_time_C_TH_network
+      nodesList = Network_UC_time_C_TH_nodes
+    }
+    else if (disease == "UC" && tp == "D"){
+      document.getElementById("filter2-2").checked = true;
+      document.getElementById("filter3-0").checked = true;
+      finalDataObj = Network_UC_time_D_TH_network
+      nodesList = Network_UC_time_D_TH_nodes
+    }
     //////////////// GRAPH CREATION ////////////////
      var elem = document.getElementById('3d-graph');
      var Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer   : true}})
@@ -401,101 +479,12 @@ function addOptions(addText, selectElement)
 
 
     function changeState(){
-    
-    var disease = document.querySelector('input[name="filter2"]:checked').value;
-   
-    var tp = document.querySelector('input[name="filter3"]:checked').value;
-    
-
-    if(disease == "CD" && tp == "A"){
-      finalDataObj = Network_CD_time_A_TH_network
-      nodesList = Network_CD_time_A_TH_nodes
-    }
-    else if (disease == "CD" && tp == "B"){
-      finalDataObj = Network_CD_time_B_TH_network
-      nodesList = Network_CD_time_B_TH_nodes
-    }
-    else if (disease == "CD" && tp == "C"){
-      finalDataObj = Network_CD_time_C_TH_network
-      nodesList = Network_CD_time_C_TH_nodes
-    }
-    else if (disease == "CD" && tp == "D"){
-      finalDataObj = Network_CD_time_D_TH_network
-      nodesList = Network_CD_time_D_TH_nodes
-    }
-    else if (disease == "HC" && tp == "A"){
-      finalDataObj = Network_HC_time_A_TH_network
-      nodesList = Network_HC_time_A_TH_nodes
-    }
-    else if (disease == "HC" && tp == "B"){
-      finalDataObj = Network_HC_time_B_TH_network
-      nodesList = Network_HC_time_B_TH_nodes
-    }
-    else if (disease == "HC" && tp == "C"){
-      finalDataObj = Network_HC_time_C_TH_network
-      nodesList = Network_HC_time_C_TH_nodes
-    }
-    else if (disease == "HC" && tp == "D"){
-      finalDataObj = Network_HC_time_D_TH_network
-      nodesList = Network_HC_time_D_TH_nodes
-    }
-    else if (disease == "UC" && tp == "A"){
-      finalDataObj = Network_UC_time_A_TH_network
-      nodesList = Network_UC_time_A_TH_nodes
-    }
-    else if (disease == "UC" && tp == "B"){
-      finalDataObj = Network_UC_time_B_TH_network
-      nodesList = Network_UC_time_B_TH_nodes
-    }
-    else if (disease == "UC" && tp == "C"){
-      finalDataObj = Network_UC_time_C_TH_network
-      nodesList = Network_UC_time_C_TH_nodes
-    }
-    else if (disease == "UC" && tp == "D"){
-      finalDataObj = Network_UC_time_D_TH_network
-      nodesList = Network_UC_time_D_TH_nodes
-    }
-    console.log(nodesList)
-    /////////////// JSON FILE ////////////////        
-       Graph = ForceGraph3D({rendererConfig:{preserveDrawingBuffer: true}})
-       .backgroundColor("#ffffff")
-      (elem)
-        .graphData(finalDataObj)
-        .nodeThreeObject(node => CreateSource(node))  
-        .onNodeDragEnd(node => {
-          node.fx = node.x;
-          node.fy = node.y;
-          node.fz = node.z; })
-        .linkWidth(0.5)
-        .linkColor(link => ("#adadad"))
-        .linkOpacity(0.4)
-        .onNodeClick(node => {
-          // Aim at node from outside it
-          const distance = 40;
-          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-          Graph.cameraPosition(
-            { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-            node, // lookAt ({ x, y, z })
-            3000  // ms transition duration
-          );
-        });
-
-        var x = document.getElementById("nodequery");
-        removeOptions(x)
-
-        var option = document.createElement("option");
-        option.text = "--";
-        option.value = ""
-        x.add(option);
-        nodesList = nodesList.sort()
-        var nodeindexes = 0
-        for(nodeindexes = 0; nodeindexes<nodesList.length;nodeindexes++){
-          var optext = nodesList[nodeindexes]
-          addOptions(optext,x)
-          x.fstdropdown.rebind()
-        }
-        //////////////////////////////////////////////////////////////////////////
-    }
+    // var disease_select = document.querySelector('input[name="filter2"]:checked').value;
+    // var tp_select = document.querySelector('input[name="filter3"]:checked').value;
+    localStorage.setItem('predict_disease', document.querySelector('input[name="filter2"]:checked').value)
+    localStorage.setItem('predict_timepoint', document.querySelector('input[name="filter3"]:checked').value)
+    location.reload();
+  }
 
 
     function queryReset(){
