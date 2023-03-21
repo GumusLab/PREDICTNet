@@ -301,8 +301,8 @@ function addOptions(addText, selectElement)
     }
 
     //////////////// JSON FILE ////////////////
-    var disease = localStorage.getItem('predict_disease') == undefined ? "HC" : localStorage.getItem('predict_disease')
-    var tp = localStorage.getItem('predict_timepoint') == undefined ? "A" : localStorage.getItem('predict_timepoint')
+    var disease = sessionStorage.getItem('predict_disease') == undefined ? "HC" : sessionStorage.getItem('predict_disease')
+    var tp = sessionStorage.getItem('predict_timepoint') == undefined ? "A" : sessionStorage.getItem('predict_timepoint')
     
     // document.getElementById("Apple").checked = true;
     console.log(disease,"------",tp)
@@ -481,8 +481,8 @@ function addOptions(addText, selectElement)
     function changeState(){
     // var disease_select = document.querySelector('input[name="filter2"]:checked').value;
     // var tp_select = document.querySelector('input[name="filter3"]:checked').value;
-    localStorage.setItem('predict_disease', document.querySelector('input[name="filter2"]:checked').value)
-    localStorage.setItem('predict_timepoint', document.querySelector('input[name="filter3"]:checked').value)
+    sessionStorage.setItem('predict_disease', document.querySelector('input[name="filter2"]:checked').value)
+    sessionStorage.setItem('predict_timepoint', document.querySelector('input[name="filter3"]:checked').value)
     location.reload();
   }
 
