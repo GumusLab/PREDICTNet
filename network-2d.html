@@ -390,11 +390,11 @@ function addOptions(addText, selectElement)
 const Graph = ForceGraph()
   (document.getElementById('3d-graph'))
     .nodeCanvasObject((node, ctx, globalScale) => {
-      ctx.fillStyle = "#3683ba";
+      ctx.fillStyle = "#85b1ff";
       ctx.beginPath(); ctx.arc(node.x, node.y, 4, 0, 2 * Math.PI, false); ctx.fill();
       ctx.fillStyle = "#000000";
       
-      const fontSize = globalScale*2 > 5 ? 5 : globalScale*2 ;
+      const fontSize = globalScale*2 > 3.5 ? 3.5 : globalScale*2 ;
       ctx.font = `${fontSize}px Sans-Serif`;
       ctx.textAlign = 'center'; 
       ctx.textBaseline = 'middle'; 
@@ -409,7 +409,7 @@ const Graph = ForceGraph()
 function nodePaint(node, color, ctx) {
   ctx.fillStyle = color;
   ctx.beginPath(); 
-  ctx.arc(node.x, node.y, 5, 0, 2 * Math.PI, false); 
+  ctx.arc(node.x, node.y, 4, 0, 2 * Math.PI, false); 
   ctx.fill();
   ctx.font = '10px Sans-Serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('Text', node.x, node.y); 
 
