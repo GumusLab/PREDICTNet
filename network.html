@@ -69,6 +69,22 @@
   z-index: 10; 
 }
 
+.button3 {
+  border: none;
+  padding: 5px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: absolute;
+  left: 85px;   /* position inside relatively positioned parent */
+  top: 360px;
+  z-index: 10; 
+}
+
 .button1:hover {
   background-color: #b1b1b1;
   color: rgb(0, 0, 0);
@@ -163,7 +179,7 @@ body {
     </g>
   </svg>
   
-  <p class="p1" id= "nqText" >Node Query</p>
+  <p class="p1" id= "nqText">Node Query</p>
 
   <button class="link" id="hideShow" value=0 onclick="hideShow(this.value)"><u>hide controls</u></button>
 
@@ -177,6 +193,8 @@ body {
   <button class="button button1" id="screenshotButton" onclick="screenshot()">Screenshot</button>
 
   <button class="button2 button1" id="resetButton"  onclick="queryReset()">Reset</button>
+
+  <button class="button3 button1" id="2dButton"  onclick="switch2d()">Switch to 2D</button>
   
 <div id="radioButtons">
   <ul id="filter2" class="filter-switch inline-flex items-center relative h-10 p-1 space-x-1 bg-gray-200 rounded-md font-medium text-black-600 my-4 border border-gray-400">
@@ -494,6 +512,10 @@ function addOptions(addText, selectElement)
       Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
 
     }
+
+  function switch2d(){
+    window.location.href = "network-2d.html"
+  }
 
   </script>
 </body>
