@@ -11,6 +11,7 @@
   <!-- <script src="libraries/three-spritetext.min.js"></script> -->
   <script src="libraries/d3.v3.min.js" charset="utf-8"></script>
   <script src="libraries/rainbowvis.js"></script>
+  <script src="libraries/reimg.js"></script>
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
   <script src="js/fstdropdown.js"></script>
   <script src="js/networks.js"></script>
@@ -229,7 +230,7 @@ body {
   </ul>
 </div>
 
-  <div id="3d-graph"></div>
+  <div id="graph"></div>
 
 <script>
 
@@ -380,15 +381,9 @@ function addOptions(addText, selectElement)
       finalDataObj = Network_UC_time_D_TH_network
       nodesList = Network_UC_time_D_TH_nodes
     }
-    
-    // const Graph = ForceGraph()
-    //   (document.getElementById('3d-graph'))
-    //     .graphData(finalDataObj)
-    //     .linkWidth(0.4);
-
 
 const Graph = ForceGraph()
-  (document.getElementById('3d-graph'))
+  (document.getElementById('graph'))
     .nodeCanvasObject((node, ctx, globalScale) => {
       ctx.fillStyle = "#85b1ff";
       ctx.beginPath(); ctx.arc(node.x, node.y, 4, 0, 2 * Math.PI, false); ctx.fill();
@@ -422,40 +417,35 @@ function nodePaint(node, color, ctx) {
     var optext = nodesList[nodeindexes]
     addOptions(optext,x)
   }
-        
-        // //////////////// XXXXXX ////////////////
-          
-        // function CreateSource(node)
-        // {
-        //   var node_size = .7
-        //   var mesh = (new THREE.Mesh(    
-        //   new THREE.SphereGeometry(node_size*8,25,25),
-        //   new THREE.MeshBasicMaterial( { 
-        //     color: 0xffff00 ,
-        //     depthWrite: false
-        //   } )
-        //   // new THREE.MeshLambertMaterial({
-        //   //   transparent: false,
-        //   //   depthWrite: false,
-        //   //   opacity: 1 //changed 0.8 to 1 
-        //   // })
-        // ))
 
-        // const sprite = new SpriteText(node.id);
-        // sprite.color = 'rgb(0,0,0)';
-        // sprite.textHeight = 5;
-        // mesh.add(sprite);
-        // mesh.material.color.setHex("0xbdd5ff");
-        // return mesh
-        // }
+  function cloneCanvas(oldCanvas) {
+  //create a new canvas
+  var newCanvas = document.createElement('canvas');
+  var context = newCanvas.getContext('2d');
 
-        function screenshot(){
-        var ImageBase64 = Graph.renderer().domElement.toDataURL("image/png");
-        var a = document.createElement("a"); //Create <a>
-        a.href = ImageBase64; //Image Base64 Goes here
-        a.download = "image.png"; //File name Here
-        a.click(); //Downloaded file
-        }
+  //set dimensions
+  newCanvas.width = oldCanvas.width;
+  newCanvas.height = oldCanvas.height;
+
+  //apply the old canvas to the new one
+  context.drawImage(oldCanvas, 0, 0);
+
+  //return the new canvas
+  return newCanvas;
+}
+  
+function screenshot(){
+  let oldcanvas = document.getElementsByTagName('canvas')[0];
+  let canvas = cloneCanvas(oldcanvas)
+  var ctx = canvas.getContext('2d')
+  ctx.globalCompositeOperation = 'destination-over';
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fillRect(-1, -1, canvas.width+10, canvas.height+10);
+  ctx.fillRect(1, 1, -canvas.width-10, -canvas.height-10);
+  ctx.fillRect(0, 0, canvas.width+10, -canvas.height-10);
+  ctx.fillRect(0, 0, -canvas.width-10, canvas.height+10);
+  ReImg.fromCanvas(canvas).downloadPng();
+}
 
     const CAMERA_DISTANCE2NODES_FACTOR = 170;
 
