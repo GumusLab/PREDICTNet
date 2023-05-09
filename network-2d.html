@@ -454,28 +454,16 @@ function screenshot(){
     function updateSearch() {
       var x = document.getElementById("nodequery");
       if(x.value == ""){
-        var nodenum = Graph.graphData().nodes.length
-        Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
+        Graph.centerAt(0, 0, 500);
+        Graph.zoom(.39, 500);
       }
-
-      Graph.nodeThreeObjectExtend(node => {
-        var selectedNode = x.value //change
-        if (selectedNode == node.id) {
-              {   const distance = 100;
-                  const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-                  Graph.cameraPosition(
-                      { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-                      node, // lookAt ({ x, y, z })
-                      3000  // ms transition duration
-                      );
-              }
-          }
-      })
+      else{
+        let currentData = Graph.graphData()
+        let thisNode = currentData["nodes"].filter(ix => ix.id === x.value)[0]
+        Graph.centerAt(thisNode.x, thisNode.y, 500);
+        Graph.zoom(15, 500);
       }
-
-
-
-
+      }
 
     function changeState(){
     // var disease_select = document.querySelector('input[name="filter2"]:checked').value;
@@ -489,9 +477,8 @@ function screenshot(){
     function queryReset(){
       document.getElementById("nodequery").selectedIndex = 0;
       document.getElementById("nodequery").fstdropdown.rebind()
-      var nodenum = Graph.graphData().nodes.length
-      Graph.cameraPosition({x:0,y:0,z:Math.cbrt(nodenum) * CAMERA_DISTANCE2NODES_FACTOR},{x:0,y:0,z:0},2000)
-
+      Graph.centerAt(0, 0, 500);
+      Graph.zoom(.39, 500);
     }
 
   </script>
